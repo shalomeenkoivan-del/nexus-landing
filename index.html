@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nexus Chat</title>
+  <title>Nexus</title>
   <style>
     :root {
       --text: #0f0;
@@ -23,7 +23,6 @@
       position: relative;
     }
     
-    /* MATRIX RAIN */
     .matrix-bg {
       position: fixed;
       top: 0; left: 0;
@@ -291,7 +290,6 @@
   </style>
 </head>
 <body>
-  <!-- MATRIX RAIN BACKGROUND -->
   <canvas class="matrix-bg" id="matrix"></canvas>
 
   <div class="content">
@@ -300,7 +298,6 @@
       <span class="lang-link" onclick="showLang('ru')">RU</span>
     </div>
 
-    <!-- EN -->
     <div id="lang-en">
       <div class="header">NEXUS</div>
       <div class="tagline">The terminal chat that never logs your soul.</div>
@@ -343,7 +340,6 @@
       </div>
     </div>
 
-    <!-- RU -->
     <div id="lang-ru" class="hidden">
       <div class="header">NEXUS</div>
       <div class="tagline">Терминальный чат, который не хранит и не продает твои данные.</div>
@@ -388,7 +384,6 @@
   </div>
 
   <script>
-    // MATRIX RAIN
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     
@@ -420,7 +415,6 @@
     
     setInterval(drawMatrix, 50);
     
-    // Language switch
     function showLang(lang) {
       document.querySelectorAll('[id^="lang-"]').forEach(el => {
         el.classList.toggle('hidden', !el.id.includes(lang));
@@ -432,11 +426,11 @@
       showLang('ru');
     }
     
-    // Resize canvas
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
   </script>
 </body>
+
 </html>
