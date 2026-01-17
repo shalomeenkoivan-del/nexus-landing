@@ -95,27 +95,6 @@
       50% { opacity: 0.7; }
     }
     
-    .lang-switch {
-      text-align: right;
-      margin-bottom: 30px;
-      font-size: 1rem;
-    }
-    
-    .lang-link {
-      color: var(--accent);
-      text-decoration: underline;
-      cursor: pointer;
-      padding: 5px 10px;
-      transition: all 0.3s;
-      display: inline-block;
-    }
-    
-    .lang-link:hover {
-      background: var(--panel);
-      border-radius: 4px;
-      animation: glitch 0.3s;
-    }
-    
     .terminal-frame {
       background: var(--panel);
       border: 2px solid #00ff88;
@@ -287,83 +266,203 @@
       0%, 100% { text-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88; }
       50% { text-shadow: 0 0 40px #00ff88, 0 0 60px #00ff88; }
     }
+    
+    .welcome-btn {
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      padding: 10px;
+    }
 
+    .welcome-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      filter: drop-shadow(0 0 25px #00ff88);
+      animation: welcomePulse 0.6s ease-in-out;
+    }
+
+    .welcome-btn:active {
+      transform: scale(0.98) translateY(0);
+      animation: welcomeClick 0.2s ease-out;
+    }
+
+    @keyframes welcomePulse {
+      0%, 100% { box-shadow: 0 0 30px #00ff88; }
+      50% { box-shadow: 0 0 50px #00ff88, 0 0 70px rgba(0,255,136,0.5); }
+    }
+
+    @keyframes welcomeClick {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.95); }
+      100% { transform: scale(0.98); }
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-bar {
+      text-align: right;
+      font-size: 1rem;
+    }
+
+    .lang-box {
+      background: var(--panel);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      padding: 4px 8px;
+    }
+
+    .nav-link,
+    .lang-link {
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 5px 10px;
+      transition: all 0.3s;
+      display: inline-block;
+      position: relative;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: var(--panel);
+      border-radius: 4px;
+      animation: glitch 0.3s;
+      text-shadow: var(--glow);
+    }
+
+    .active-lang {
+      background: var(--accent);
+      color: #000 !important;
+      border-radius: 4px;
+      text-shadow: none !important;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .contact-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0,255,136,0.05);
+      margin: 20px 0;
+      border-left: 4px solid var(--accent);
+      transition: all 0.3s;
+    }
+
+    .contact-item:hover {
+      background: rgba(0,255,136,0.15);
+      transform: translateX(10px);
+    }
+
+    .contact-link {
+      color: var(--accent);
+      cursor: pointer;
+      font-family: monospace;
+      font-size: 1.1em;
+    }
+
+    .contact-link.disabled {
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    .donate-box {
+      background: linear-gradient(145deg, var(--panel), #1a1a1a);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      margin: 40px auto;
+      box-shadow: 0 0 50px rgba(0,255,136,0.2);
+    }
+
+    .donate-network {
+      color: var(--accent);
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .donate-address {
+      font-family: monospace;
+      font-size: 1.1em;
+      color: var(--text);
+      background: rgba(0,0,0,0.5);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      word-break: break-all;
+      border: 1px solid #333;
+    }
+
+    .copy-btn {
+      padding: 15px 40px;
+      background: linear-gradient(145deg, var(--text), var(--accent));
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0,255,136,0.4);
+    }
   </style>
 </head>
 <body>
   <canvas class="matrix-bg" id="matrix"></canvas>
 
   <div class="content">
-    <div class="lang-switch">
-      <span class="lang-link" onclick="showLang('en')">EN</span> | 
-      <span class="lang-link" onclick="showLang('ru')">RU</span>
-    </div>
-
-    <div id="lang-en">
-      <div class="header">NEXUS</div>
-      <div class="tagline">The terminal chat that never logs your soul.</div>
-
-      <p style="text-align: center; font-size: 1.1em; margin: 30px 0;">
-        No phone number. No email. No cloud. Just your <strong>BIP39 seed phrase</strong>.
-      </p>
-
-      <div class="terminal-frame">
-        <div style="text-align: center; padding: 20px 10px;">
-          <div style="
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            color: var(--accent);
-            font-weight: bold;
-            text-shadow: 0 0 30px #00ff88;
-            animation: pulse-glow 2s infinite;
-            margin: 10px 0;
-            ">
-            Welcome to the Shadows, NYXX.
-            </div>
-        </div>
+    <div class="nav-container">
+      <div class="nav-bar" id="nav-bar">
+        <span class="nav-link active" data-section="home">ГЛАВНАЯ</span> | 
+        <span class="nav-link" data-section="contacts">КОНТАКТЫ</span> | 
+        <span class="nav-link" data-section="donate">ПОДДЕРЖАТЬ ПРОЕКТ</span>
       </div>
-
-      <div class="features">
-        <div class="feature">End-to-end ownership — your messages, your server</div>
-        <div class="feature">BIP39 seed phrase auth — like crypto wallets</div>
-        <div class="feature">Global rooms + private channels — no corporate moderation</div>
-        <div class="feature">Self-hosted, open-core, zero telemetry</div>
-        <div class="feature">Built for privacy rebels, hackers, terminal lovers</div>
-      </div>
-
-      <div class="statement">
-        Communication belongs to you.
-      </div>
-
-      <a href="https://6ukt5w-185-44-69-195.ru.tuna.am" class="btn">Enter the Shadows</a>
-
-      <div class="footer">
-        © 2026 — for those who dwell in the Shadows.
+      <div class="lang-box">
+        <span class="lang-link active-lang" data-lang="ru">RU</span> | 
+        <span class="lang-link" data-lang="en">EN</span>
       </div>
     </div>
 
-    <div id="lang-ru" class="hidden">
+    <div id="home-ru" class="section active">
       <div class="header">NEXUS</div>
       <div class="tagline">Терминальный чат, который не хранит и не продает твои данные.</div>
-
       <p style="text-align: center; font-size: 1.1em; margin: 30px 0;">
         Никакого телефона. Никакой почты. Никакого облака. Только <strong>BIP39 seed-фраза</strong>.
       </p>
-
       <div class="terminal-frame">
-        <div style="text-align: center; padding: 20px 10px;">
-          <div style="
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            color: var(--accent);
-            font-weight: bold;
-            text-shadow: 0 0 30px #00ff88;
-            animation: pulse-glow 2s infinite;
-            margin: 10px 0;
-            ">
-            Добро пожаловать, NYXX.
-            </div>
-        </div>
+        <div class="welcome-btn" onclick="enterShadows()" style="
+          font-size: clamp(1.5rem, 5vw, 2.5rem);
+          color: var(--accent);
+          font-weight: bold;
+          text-shadow: 0 0 30px #00ff88;
+          animation: pulse-glow 2s infinite;
+          margin: 10px auto;
+          display: block;
+          text-align: center;
+          max-width: 90%;
+        ">Добро пожаловать, NYXX.</div>
       </div>
-
       <div class="features">
         <div class="feature">Полный контроль — твои сообщения, твой сервер</div>
         <div class="feature">Авторизация по seed-фразе (BIP39) — как в криптокошельках</div>
@@ -371,68 +470,202 @@
         <div class="feature">Самостоятельный хостинг, open-core, без телеметрии</div>
         <div class="feature">Для тех, кто ценит приватность, терминал и свободу</div>
       </div>
-
-      <div class="statement">
-        Коммуникация принадлежит тебе.
-      </div>
-
+      <div class="statement">Коммуникация принадлежит тебе.</div>
       <a href="https://6ukt5w-185-44-69-195.ru.tuna.am" class="btn">Скрыться в Тени</a>
+      <div class="footer">© 2026 — для тех, кто не страшится Тени.</div>
+    </div>
 
-      <div class="footer">
-        © 2026 — для тех, кто не страшится Тени.
+    <div id="home-en" class="section">
+      <div class="header">NEXUS</div>
+      <div class="tagline">The terminal chat that never logs your soul.</div>
+      <p style="text-align: center; font-size: 1.1em; margin: 30px 0;">
+        No phone number. No email. No cloud. Just your <strong>BIP39 seed phrase</strong>.
+      </p>
+      <div class="terminal-frame">
+        <div class="welcome-btn" onclick="enterShadows()" style="
+          font-size: clamp(1.5rem, 5vw, 2.5rem);
+          color: var(--accent);
+          font-weight: bold;
+          text-shadow: 0 0 30px #00ff88;
+          animation: pulse-glow 2s infinite;
+          margin: 10px auto;
+          display: block;
+          text-align: center;
+          max-width: 90%;
+        ">Welcome to the Shadows, NYXX.</div>
+      </div>
+      <div class="features">
+        <div class="feature">End-to-end ownership — your messages, your server</div>
+        <div class="feature">BIP39 seed phrase auth — like crypto wallets</div>
+        <div class="feature">Global rooms + private channels — no corporate moderation</div>
+        <div class="feature">Self-hosted, open-core, zero telemetry</div>
+        <div class="feature">Built for privacy rebels, hackers, terminal lovers</div>
+      </div>
+      <div class="statement">Communication belongs to you.</div>
+      <a href="https://6ukt5w-185-44-69-195.ru.tuna.am" class="btn">Enter the Shadows</a>
+      <div class="footer">© 2026 — for those who dwell in the Shadows.</div>
+    </div>
+
+    <div id="contacts-ru" class="section">
+      <div class="header">КОНТАКТЫ</div>
+      <div class="contact-item">
+        <div class="contact-label">Email:</div>
+        <a href="mailto:nyxxweare@gmail.com" class="contact-link">nyxxweare@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Telegram:</div>
+        <span class="contact-link disabled">в процессе</span>
+      </div>
+    </div>
+
+    <div id="contacts-en" class="section">
+      <div class="header">CONTACT</div>
+      <div class="contact-item">
+        <div class="contact-label">Email:</div>
+        <a href="mailto:nyxxweare@gmail.com" class="contact-link">nyxxweare@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Telegram:</div>
+        <span class="contact-link disabled">(in process)</span>
+      </div>
+    </div>
+
+    <div id="donate-ru" class="section">
+      <div class="header">СДЕЛАТЬ ПОЖЕРТВОВАНИЕ</div>
+      <div class="donate-box">
+        <div class="donate-network">ERC-20 (USDT)</div>
+        <div class="donate-address">0xb7e7956368e8906262044dc426be058f8580735d</div>
+        <button class="copy-btn" onclick="copyAddress()">Скопировать адрес</button>
+      </div>
+    </div>
+
+    <div id="donate-en" class="section">
+      <div class="header">MAKE DONATION</div>
+      <div class="donate-box">
+        <div class="donate-network">ERC-20 (USDT)</div>
+        <div class="donate-address">0xb7e7956368e8906262044dc426be058f8580735d</div>
+        <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
       </div>
     </div>
   </div>
 
   <script>
+    let currentSection = 'home';
+    let currentLang = 'ru';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      updateUI();
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          showSection(link.dataset.section);
+        });
+      });
+
+      document.querySelectorAll('.lang-link').forEach(link => {
+        link.addEventListener('click', () => {
+          toggleLang(link.dataset.lang);
+        });
+      });
+    });
+
+    function updateUI() {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      
+
+      const targetSection = document.getElementById(`${currentSection}-${currentLang}`);
+      if (targetSection) targetSection.classList.add('active');
+
+      updateNavLinks();
+      updateLangLinks();
+    }
+
+    function updateNavLinks() {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.section === currentSection) {
+          link.classList.add('active');
+        }
+      });
+
+      const navTexts = {
+        ru: { home: 'ГЛАВНАЯ', contacts: 'КОНТАКТЫ', donate: 'ПОДДЕРЖАТЬ ПРОЕКТ' },
+        en: { home: 'HOME', contacts: 'CONTACTS', donate: 'DONATE' }
+      };
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const key = link.dataset.section;
+        link.textContent = navTexts[currentLang][key] || key.toUpperCase();
+      });
+    }
+
+    function updateLangLinks() {
+      document.querySelectorAll('.lang-link').forEach(link => {
+        link.classList.remove('active-lang');
+        if (link.dataset.lang === currentLang) {
+          link.classList.add('active-lang');
+        }
+      });
+    }
+
+    function showSection(section) {
+      currentSection = section;
+      updateUI();
+    }
+
+    function toggleLang(lang) {
+      currentLang = lang;
+      updateUI();
+    }
+
+    function copyAddress() {
+      navigator.clipboard.writeText('0xb7e7956368e8906262044dc426be058f8580735d');
+      const btn = event.target;
+      const original = btn.textContent;
+      btn.textContent = currentLang === 'ru' ? 'Скопировано!' : 'Copied!';
+      btn.style.background = '#00ff88';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.background = '';
+      }, 2000);
+    }
+
+    function enterShadows() {
+      window.location.href = "https://6ukt5w-185-44-69-195.ru.tuna.am";
+    }
+
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
-    
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    
+
     const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
     const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-    
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
     function drawMatrix() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
       ctx.fillStyle = '#0f0';
       ctx.font = `${fontSize}px monospace`;
       
-      drops.forEach((y, i) => {
+      for (let i = 0; i < drops.length; i++) {
         const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, y * fontSize);
-        
-        if (y * fontSize > canvas.height && Math.random() > 0.975) {
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
-      });
+      }
     }
-    
+
     setInterval(drawMatrix, 50);
-    
-    function showLang(lang) {
-      document.querySelectorAll('[id^="lang-"]').forEach(el => {
-        el.classList.toggle('hidden', !el.id.includes(lang));
-      });
-      document.querySelector('.lang-link[onclick*="'+lang+'"]').scrollIntoView({behavior: 'smooth'});
-    }
-    
-    if (navigator.language.startsWith('ru')) {
-      showLang('ru');
-    }
-    
+
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
   </script>
 </body>
-
 </html>
-
