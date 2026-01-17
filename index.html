@@ -426,43 +426,6 @@
       transform: scale(1.05);
       box-shadow: 0 10px 30px rgba(0,255,136,0.4);
     }
-
-    .nyxx-fade-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: #000000;
-      z-index: 99999; 
-      opacity: 0; 
-      transition: opacity 1.5s cubic-bezier(0.25,0.46,0.45,0.94);
-      pointer-events: none;
-    }
-
-    .nyxx-fade-overlay.active {
-      opacity: 1;
-    }
-
-    .nyxx-loading {
-      position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
-      text-align: center; color: #00ff88; font-family: monospace;
-    }
-
-    .loading-bar {
-      width: 300px; height: 4px; background: #111; border-radius: 2px; 
-      margin: 20px auto; overflow: hidden;
-    }
-
-    .loading-progress {
-        height: 100%; 
-        background: linear-gradient(90deg, #00ff88, #0f0); 
-        width: 0%; 
-        transition: width 1.5s cubic-bezier(0.25,0.46,0.45,0.94); 
-        border-radius: 2px;
-      }
-
-    @keyframes nyxxProgress {
-      0%, 100% { width: 0%; }
-      50% { width: 90%; }
-    }
-
   </style>
 </head>
 <body>
@@ -590,14 +553,6 @@
     </div>
   </div>
 
-    <div id="nyxx-transition" class="nyxx-fade-overlay">
-      <div class="nyxx-loading">
-        <div class="loading-bar">
-          <div class="loading-progress"></div>
-        </div>
-      </div>
-    </div>
-
   <script>
     let currentSection = 'home';
     let currentLang = 'ru';
@@ -705,26 +660,10 @@
       }
     }
 
-    async function nyxxEnter() {
-      const overlay = document.getElementById('nyxx-transition');
-      overlay.classList.add('active');
-  
-      const progress = overlay.querySelector('.loading-progress');
-  
-      let width = 0;
-      const interval = setInterval(() => {
-        width += 8;
-        progress.style.width = width + '%';
-        if (width >= 100) {
-          clearInterval(interval);
-        }
-      }, 50);
-  
-      setTimeout(() => {
-        window.location.href = "http://192.168.0.160:5000/";
-      }, 1800);
+    function nyxxEnter() {
+      window.location.href = "http://192.168.0.160:5000/";
     }
-
+ 
     setInterval(drawMatrix, 50);
 
     window.addEventListener('resize', () => {
@@ -733,5 +672,4 @@
     });
   </script>
 </body>
-
 </html>
