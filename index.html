@@ -426,6 +426,43 @@
       transform: scale(1.05);
       box-shadow: 0 10px 30px rgba(0,255,136,0.4);
     }
+
+    .nyxx-fade-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000000;
+      z-index: 99999; 
+      opacity: 0; 
+      transition: opacity 1.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      pointer-events: none;
+    }
+
+    .nyxx-fade-overlay.active {
+      opacity: 1;
+    }
+
+    .nyxx-loading {
+      position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
+      text-align: center; color: #00ff88; font-family: monospace;
+    }
+
+    .loading-bar {
+      width: 300px; height: 4px; background: #111; border-radius: 2px; 
+      margin: 20px auto; overflow: hidden;
+    }
+
+    .loading-progress {
+        height: 100%; 
+        background: linear-gradient(90deg, #00ff88, #0f0); 
+        width: 0%; 
+        transition: width 1.5s cubic-bezier(0.25,0.46,0.45,0.94); 
+        border-radius: 2px;
+      }
+
+    @keyframes nyxxProgress {
+      0%, 100% { width: 0%; }
+      50% { width: 90%; }
+    }
+
   </style>
 </head>
 <body>
@@ -443,7 +480,7 @@
         <span class="lang-link" data-lang="en">EN</span>
       </div>
     </div>
-
+    
     <div id="home-ru" class="section active">
       <div class="header">NEXUS</div>
       <div class="tagline">Терминальный чат, который не хранит и не продает твои данные.</div>
@@ -451,7 +488,7 @@
         Никакого телефона. Никакой почты. Никакого облака. Только <strong>BIP39 seed-фраза</strong>.
       </p>
       <div class="terminal-frame">
-        <div class="welcome-btn" onclick="enterShadows()" style="
+        <div class="welcome-btn" onclick="nyxxEnter()" style="
           font-size: clamp(1.5rem, 5vw, 2.5rem);
           color: var(--accent);
           font-weight: bold;
@@ -471,7 +508,9 @@
         <div class="feature">Для тех, кто ценит приватность, терминал и свободу</div>
       </div>
       <div class="statement">Коммуникация принадлежит тебе.</div>
-      <a href="https://6ukt5w-185-44-69-195.ru.tuna.am" class="btn">Скрыться в Тени</a>
+      <div class="btn nyxx-enter-btn" onclick="nyxxEnter()" style="cursor: pointer;">
+        Скрыться в Тени
+      </div>
       <div class="footer">© 2026 — для тех, кто не страшится Тени.</div>
     </div>
 
@@ -482,7 +521,7 @@
         No phone number. No email. No cloud. Just your <strong>BIP39 seed phrase</strong>.
       </p>
       <div class="terminal-frame">
-        <div class="welcome-btn" onclick="enterShadows()" style="
+        <div class="welcome-btn" onclick="nyxxEnter()" style="
           font-size: clamp(1.5rem, 5vw, 2.5rem);
           color: var(--accent);
           font-weight: bold;
@@ -502,7 +541,9 @@
         <div class="feature">Built for privacy rebels, hackers, terminal lovers</div>
       </div>
       <div class="statement">Communication belongs to you.</div>
-      <a href="https://6ukt5w-185-44-69-195.ru.tuna.am" class="btn">Enter the Shadows</a>
+      <div class="btn nyxx-enter-btn" onclick="nyxxEnter()" style="cursor: pointer;">
+        Enter the Shadows
+      </div>
       <div class="footer">© 2026 — for those who dwell in the Shadows.</div>
     </div>
 
@@ -548,6 +589,14 @@
       </div>
     </div>
   </div>
+
+    <div id="nyxx-transition" class="nyxx-fade-overlay">
+      <div class="nyxx-loading">
+        <div class="loading-bar">
+          <div class="loading-progress"></div>
+        </div>
+      </div>
+    </div>
 
   <script>
     let currentSection = 'home';
@@ -630,10 +679,6 @@
       }, 2000);
     }
 
-    function enterShadows() {
-      window.location.href = "https://6ukt5w-185-44-69-195.ru.tuna.am";
-    }
-
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -660,6 +705,26 @@
       }
     }
 
+    async function nyxxEnter() {
+      const overlay = document.getElementById('nyxx-transition');
+      overlay.classList.add('active');
+  
+      const progress = overlay.querySelector('.loading-progress');
+  
+      let width = 0;
+      const interval = setInterval(() => {
+        width += 8;
+        progress.style.width = width + '%';
+        if (width >= 100) {
+          clearInterval(interval);
+        }
+      }, 50);
+  
+      setTimeout(() => {
+        window.location.href = "https://6ukt5w-185-44-69-195.ru.tuna.am/";
+      }, 1800);
+    }
+
     setInterval(drawMatrix, 50);
 
     window.addEventListener('resize', () => {
@@ -668,5 +733,4 @@
     });
   </script>
 </body>
-
 </html>
