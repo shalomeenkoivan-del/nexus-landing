@@ -1316,7 +1316,7 @@ Welcome to the Shadows, NYXX.
 // ==========================================
 const soundToggle = document.getElementById('soundToggle');
 const sounds = {
-    click: new Audio('https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/click.mp3'),
+    click: new Audio('audio/click.mp3'),
 };
 sounds.click.preload = 'metadata';
 sounds.click.volume = 0.5;
@@ -1559,23 +1559,23 @@ function nyxxEnter() {
 const cyberPlayer = document.querySelector('.cyber-player');
 if (cyberPlayer) {
     const tracks = [
-        { name: "Skyfall Beats // Metro", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track1.mp3" },
-        { name: "A-Mase // The Paradise Beach", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track2.mp3" },
-        { name: "Labs Cloud // Again", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track3.mp3" },
-        { name: "Leon Switch // React", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track4.mp3" },
-        { name: "Liam Thomas // Nebula", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track5.mp3" },
-        { name: "Deep Active Sound // Thoughts", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track6.mp3" },
-        { name: "Biodub // Hymewake Bookwood 808 Rewind", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track7.mp3" },
-        { name: "Ohota // Everything Is as It Should Be", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track8.mp3" },
-        { name: "Wasisunqu Labs Cloud // Rooting", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track9.mp3" },
-        { name: "Sestrica // Friends", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track10.mp3" },
-        { name: "Ivory IT // Shiver", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track11.mp3" },
-        { name: "Endemica // Manuscript", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track12.mp3" },
-        { name: "Unus Emre // Endless", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track13.mp3" },
-        { name: "Endemica, Cotry // Rain", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track14.mp3"},
-        { name: "Ev Darko // Deep Effect", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track15.mp3"},
-        { name: "Big Al // La Eternidad Deep Active Sound Remix", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track16.mp3"},
-        { name: "Acidova, Windom R // Shine", src: "https://github.com/shalomeenkoivan-del/nexus-landing/releases/download/sound/track17.mp3"}
+        { name: "Skyfall Beats // Metro", src: "audio/track1.mp3" },
+        { name: "A-Mase // The Paradise Beach", src: "audio/track2.mp3" },
+        { name: "Labs Cloud // Again", src: "audio/track3.mp3" },
+        { name: "Leon Switch // React", src: "audio/track4.mp3" },
+        { name: "Liam Thomas // Nebula", src: "audio/track5.mp3" },
+        { name: "Deep Active Sound // Thoughts", src: "audio/track6.mp3" },
+        { name: "Biodub // Hymewake Bookwood 808 Rewind", src: "audio/track7.mp3" },
+        { name: "Ohota // Everything Is as It Should Be", src: "audio/track8.mp3" },
+        { name: "Wasisunqu Labs Cloud // Rooting", src: "audio/track9.mp3" },
+        { name: "Sestrica // Friends", src: "audio/track10.mp3" },
+        { name: "Ivory IT // Shiver", src: "audio/track11.mp3" },
+        { name: "Endemica // Manuscript", src: "audio/track12.mp3" },
+        { name: "Unus Emre // Endless", src: "audio/track13.mp3" },
+        { name: "Endemica, Cotry // Rain", src: "audio/track14.mp3"},
+        { name: "Ev Darko // Deep Effect", src: "audio/track15.mp3"},
+        { name: "Big Al // La Eternidad Deep Active Sound Remix", src: "audio/track16.mp3"},
+        { name: "Acidova, Windom R // Shine", src: "audio/track17.mp3"}
     ];
     
     let currentTrack = 0;
