@@ -1366,55 +1366,58 @@ updateVolumeUI();
 // ==========================================
 // матрица
 // ==========================================
+let matrixAnimations = [];
 const canvases = document.querySelectorAll('.matrix-layer');
-const matrixAnimations = [];
 
-canvases.forEach((canvas, index) => {
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const fontSize = 14 + index * 2;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops = Array(columns).fill(1);
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    
-    let lastTime = 0;
-    const fps = 30;
-    const interval = 1000 / fps;
-    
-    function draw(timestamp) {
-        matrixAnimations[index] = requestAnimationFrame(draw);
-        
-        if (timestamp - lastTime < interval) return;
-        lastTime = timestamp;
-        
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = '#00ff41';
-        ctx.font = `${fontSize}px monospace`;
-        
-        for (let i = 0; i < drops.length; i++) {
-            const text = chars.charAt(Math.floor(Math.random() * chars.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-            drops[i]++;
-        }
-    }
-    
-    matrixAnimations[index] = requestAnimationFrame(draw);
-});
-
-window.addEventListener('resize', () => {
+function initMatrix() {
     matrixAnimations.forEach(id => cancelAnimationFrame(id));
+    matrixAnimations = [];
+
     canvases.forEach((canvas, index) => {
+        const ctx = canvas.getContext('2d');
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+
+        const fontSize = 14 + index * 2;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        
+        let lastTime = 0;
+        const fps = 30;
+        const interval = 1000 / fps;
+
+        function draw(timestamp) {
+            const id = requestAnimationFrame(draw);
+            matrixAnimations[index] = id;
+
+            if (timestamp - lastTime < interval) return;
+            lastTime = timestamp;
+
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff41';
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        matrixAnimations[index] = requestAnimationFrame(draw);
     });
+}
+
+initMatrix();
+
+window.addEventListener('resize', () => {
+    initMatrix();
 });
 
 // ==========================================
@@ -1565,7 +1568,7 @@ if (cyberPlayer) {
         { name: "Leon Switch // React", src: "audio/track4.mp3" },
         { name: "Liam Thomas // Nebula", src: "audio/track5.mp3" },
         { name: "Deep Active Sound // Thoughts", src: "audio/track6.mp3" },
-        { name: "Biodub // Hymewake Bookwood 808 Rewind", src: "audio/track7.mp3" },
+        { name: "Biodub // Hymewake Bookwood 808 Rewind", src: "audio/sound/track7.mp3" },
         { name: "Ohota // Everything Is as It Should Be", src: "audio/track8.mp3" },
         { name: "Wasisunqu Labs Cloud // Rooting", src: "audio/track9.mp3" },
         { name: "Sestrica // Friends", src: "audio/track10.mp3" },
