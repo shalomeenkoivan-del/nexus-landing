@@ -167,8 +167,7 @@ position: relative;
 z-index: 10;
 max-width: 900px;
 margin: 0 auto;
-padding: 40px 20px;
-position: relative;
+padding: 2px 20px 40px;
 width: 100%;
 box-sizing: border-box;
 }
@@ -183,7 +182,7 @@ background-clip: text;
 animation:
     bg-move 8s linear infinite;
 text-align: center;
-margin: 40px 0;
+margin: 2px 0 40px 0;
 filter: drop-shadow(0 0 30px rgba(0,255,136,0.7));
 letter-spacing: -3px;
 position: relative;
@@ -456,12 +455,38 @@ from { opacity: 0; transform: translateY(20px); }
 to { opacity: 1; transform: translateY(0); }
 }
 .hidden { display: none; }
+/* мобильная версия: только внутри media, десктоп не трогаем */
 @media (max-width: 768px) {
-.content { padding: 20px 10px; }
-.header { font-size: 2.5rem; letter-spacing: -1px; }
-.features { grid-template-columns: 1fr; }
-.terminal-frame { padding: 25px 15px; }
+.content { padding: 16px 12px 30px; }
+.header { font-size: 2.2rem; letter-spacing: -1px; margin: 20px 0 30px; }
+.tagline { font-size: 1rem; margin: 12px 0 24px; }
+.android-tagline { font-size: 0.8rem; margin: 6px 0 10px; letter-spacing: 0.08em; }
+.nav-container { padding: 10px 12px; margin: 12px 0; flex-wrap: wrap; justify-content: center; }
+.nav-bar, .lang-box { gap: 8px; font-size: 0.95em; }
+.nav-link, .lang-link { padding: 10px 12px; min-height: 44px; display: inline-flex; align-items: center; }
+.terminal-frame { padding: 20px 14px; margin: 24px 0; }
+.terminal-text { font-size: 0.9rem; padding: 14px; }
+.terminal-text .feature-line { padding: 6px 10px; font-size: 0.88em; }
+.welcome-btn { padding: 18px 16px; font-size: 1.15rem; }
+.features { grid-template-columns: 1fr; gap: 18px; margin: 30px 0; }
+.feature { padding: 18px; }
+.feature-title { font-size: 1.15em; }
+.feature-desc { font-size: 0.9em; }
+.statement { font-size: 1.15rem; margin: 40px 0; overflow-wrap: break-word; word-break: break-word; }
+.shadow-btn { width: 92%; padding: 20px 24px; font-size: 1.35em; margin: 40px auto 0; }
+.footer { margin-top: 50px; padding-top: 24px; font-size: 0.95em; }
+.donate-box { padding: 24px 16px; margin: 24px 12px; }
+.donate-address { padding: 18px 14px; font-size: 1rem; }
+.copy-btn { padding: 14px 24px; font-size: 1em; }
+.contact-item { padding: 14px 12px; flex-wrap: wrap; gap: 8px; }
+.sound-toggle { bottom: 16px; right: 16px; width: 48px; height: 48px; }
 .btn { width: 90%; padding: 25px; font-size: 1.5em; }
+}
+@media (max-width: 480px) {
+.header { font-size: 1.9rem; }
+.nav-link, .lang-link { padding: 10px 10px; font-size: 0.9em; }
+.apk-download-box { width: 180px; padding: 10px 12px; top: 10px; right: 10px; }
+.apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 36px; height: 36px; }
 }
 /* кнопка звука */
 .sound-toggle {
@@ -1134,6 +1159,139 @@ padding: 12px 16px;
 display: none;
 }
 }
+
+/* APK-блок: фиксированно справа сверху, как плеер по стилю */
+.apk-download-box {
+width: 260px;
+background: linear-gradient(145deg, rgba(0, 30, 0, 0.85), rgba(0, 20, 0, 0.95));
+border: 1.5px solid rgba(0, 255, 136, 0.35);
+border-radius: 14px;
+padding: 14px 20px;
+box-shadow:
+0 6px 20px rgba(0, 30, 15, 0.7),
+inset 0 0 12px rgba(0, 255, 136, 0.12);
+font-family: 'Rajdhani', monospace;
+backdrop-filter: blur(6px);
+transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+user-select: none;
+position: fixed;
+top: 25px;
+right: 85px;
+z-index: 15;
+overflow: hidden;
+}
+.apk-download-box::before {
+content: '';
+position: absolute;
+top: 0; left: -100%; right: 0; bottom: 0;
+background: linear-gradient(90deg, transparent, rgba(0,255,136,0.04), transparent);
+animation: scanLine 2.8s linear infinite;
+z-index: 0;
+pointer-events: none;
+opacity: 0.4;
+}
+.apk-download-box:hover {
+border-color: rgba(0, 255, 136, 0.65);
+box-shadow:
+0 8px 28px rgba(0, 40, 20, 0.85),
+inset 0 0 18px rgba(0, 255, 136, 0.22);
+transform: translateY(-2px);
+}
+.apk-download-box .apk-inner {
+position: relative;
+z-index: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 14px;
+}
+.apk-download-box .apk-head {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+gap: 14px;
+margin-bottom: 0;
+}
+.apk-download-box .apk-app-icon {
+width: 48px;
+height: 48px;
+border-radius: 12px;
+object-fit: cover;
+box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+border: 1px solid rgba(0, 255, 136, 0.4);
+flex-shrink: 0;
+}
+.apk-download-box .apk-android-icon {
+width: 48px;
+height: 48px;
+flex-shrink: 0;
+}
+.apk-download-box .apk-title-row {
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
+.apk-download-box .apk-label {
+color: var(--accent);
+font-size: 0.9em;
+font-weight: 700;
+letter-spacing: 0.05em;
+text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+white-space: nowrap;
+}
+.apk-download-box .apk-cta {
+display: block;
+width: 100%;
+margin-top: 0;
+padding: 10px 16px;
+text-align: center;
+background: linear-gradient(145deg, rgba(0, 50, 20, 0.9), rgba(0, 35, 15, 0.95));
+color: var(--accent);
+border: 1.5px solid rgba(0, 255, 136, 0.5);
+border-radius: 10px;
+font-family: 'Rajdhani', monospace;
+font-weight: 700;
+font-size: 0.9em;
+letter-spacing: 0.08em;
+text-decoration: none;
+transition: all 0.25s ease;
+box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+}
+.apk-download-box .apk-cta:hover {
+background: linear-gradient(145deg, rgba(0, 255, 136, 0.25), rgba(0, 200, 120, 0.2));
+border-color: var(--accent);
+box-shadow: 0 0 20px rgba(0, 255, 136, 0.45);
+transform: translateY(-1px);
+color: #000;
+}
+.apk-download-box .apk-lang { display: none; }
+.apk-download-box .apk-lang.active { display: block; }
+@media (max-width: 1024px) {
+.apk-download-box { width: 230px; padding: 12px 16px; right: 75px; }
+}
+@media (max-width: 768px) {
+.apk-download-box { width: 200px; padding: 12px 14px; top: 12px; right: 12px; }
+.apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 40px; height: 40px; }
+.apk-download-box .apk-head { gap: 10px; }
+.apk-download-box .apk-label { font-size: 0.8em; white-space: normal; text-align: center; }
+.apk-download-box .apk-cta { padding: 10px 12px; font-size: 0.85em; }
+}
+@media (max-width: 480px) {
+.apk-download-box { width: 180px; padding: 10px 12px; top: 10px; right: 10px; }
+.apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 36px; height: 36px; }
+}
+/* подзаголовок «Теперь и на Android» между заголовком и слоганом */
+.android-tagline {
+font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+color: rgba(0, 255, 136, 0.9);
+text-align: center;
+margin: 8px 0 16px;
+letter-spacing: 0.12em;
+text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -1155,6 +1313,22 @@ display: none;
 <canvas class="matrix-layer"></canvas>
 <canvas class="matrix-layer"></canvas>
 </div>
+<div class="apk-download-box">
+<div class="apk-inner">
+<div class="apk-head">
+<img src="icon.png" alt="Nexus" class="apk-app-icon">
+<svg class="apk-android-icon" viewBox="0 0 24 24" fill="#00ff88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="filter: drop-shadow(0 0 4px rgba(0,255,136,0.6));">
+<path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0012 1.75c-1.03 0-2.05.31-2.92.88L7.62 1.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.98 5.98 0 006 7.25h12c0-1.23-.38-2.4-1.03-3.37l-.94-.84zM10 5.25c.41 0 .75-.34.75-.75s-.34-.75-.75-.75-.75.34-.75.75.34.75.75.75zm4 0c.41 0 .75-.34.75-.75s-.34-.75-.75-.75-.75.34-.75.75.34.75.75.75z"/>
+</svg>
+</div>
+<div class="apk-title-row">
+<span class="apk-label apk-lang active" data-lang="ru">Скачать на Android</span>
+<span class="apk-label apk-lang" data-lang="en">Download on Android</span>
+</div>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang active" data-lang="ru" onclick="typeof playClickSound==='function'&&playClickSound()">Скачать APK</a>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang" data-lang="en" onclick="typeof playClickSound==='function'&&playClickSound()">Download APK</a>
+</div>
+</div>
 <div class="content">
 <!-- панель навигации -->
 <div class="nav-container">
@@ -1171,6 +1345,7 @@ display: none;
 <!-- главная (русская) -->
 <div id="home-ru" class="section active">
 <div class="header">NEXUS</div>
+<div class="android-tagline">Теперь и на Android</div>
 <div class="tagline">Терминальный чат, который не хранит и не продает твои данные</div>
 <div class="terminal-frame">
 <p class="terminal-text">
@@ -1180,7 +1355,7 @@ display: none;
 
 <span class="feature-line"> YouMe — твой личный проводник в виртуальном мире. Может быть как ассистентом, так и просто приятным собеседником. Она слышит между строк, помнит каждую деталь и отвечает с теплотой человеческого присутствия.</span>
 <span class="feature-line"> Квесты — погружайся в запретные пути против системы. Раскрывай тайны. Получай награды. Стань частью истории.</span>
-<span class="feature-line"> Уровни — любая активность формируют твою цифровую тень. Исследуй запретные миры. Обретай силу.</span>
+<span class="feature-line"> Уровни — любая активность формирует твою цифровую тень. Исследуй запретные миры. Обретай силу.</span>
 Готов узнать, насколько глубока кроличья нора?
 Выбор за тобой, но помни: обратного пути уже не будет...
 </p>
@@ -1221,17 +1396,18 @@ display: none;
 <!-- главная (англ) -->
 <div id="home-en" class="section">
 <div class="header">NEXUS</div>
+<div class="android-tagline">Now on Android</div>
 <div class="tagline">The terminal chat that never logs your soul</div>
 <div class="terminal-frame">
 <p class="terminal-text">
-Welcome, Shadow. You've crossed the threshold of Nexus — not another chat, but place where conversations breathe.
+Welcome, Shadow. You've crossed the threshold of Nexus — not another chat, but a place where conversations breathe.
 
 No algorithms. No surveillance. Just raw connection in the static.
 
-<span class="feature-line"> YouMe — your virtual AI assistent in the machine. Discuss anything. She remembers. She listens. She responds like a human.</span>
+<span class="feature-line"> YouMe — your virtual AI assistant in the machine. Discuss anything. She remembers. She listens. She responds like a human.</span>
 <span class="feature-line"> Quests — dive deep into forbidden paths against the system. Uncover secrets. Earn rewards. Become part of the story.</span>
 <span class="feature-line"> Levels — every word shapes your shadow. Speak. Grow. Ascend. Your path is your power.</span>
-Now che choice is yours: dive deeper or stay in the light.
+Now the choice is yours: dive deeper or stay in the light.
 But remember: once you see the code beneath the world...
 You can never unsee it.
 </p>
@@ -1318,6 +1494,7 @@ Welcome to the Shadows, NYXX.
 </div>
 </div>
 </div>
+</div>
 <script>
 // ==========================================
 // звук
@@ -1332,6 +1509,13 @@ sounds.click.volume = 0.5;
 let soundEnabled = true;
 let masterVolume = 1.0;
 let audioElement = null;
+
+function playClickSound() {
+    if (soundEnabled && sounds && sounds.click) {
+        sounds.click.currentTime = 0;
+        sounds.click.play().catch(function(){});
+    }
+}
 
 function updateVolumeUI() {
     if (audioElement) {
@@ -1466,6 +1650,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.style.setProperty('--y', y + 'px');
         });
     });
+
 });
 
 function updateUI() {
@@ -1474,6 +1659,9 @@ function updateUI() {
     if (targetSection) targetSection.classList.add('active');
     updateNavLinks();
     updateLangLinks();
+    document.querySelectorAll('.apk-download-box .apk-lang').forEach(el => {
+        el.classList.toggle('active', el.dataset.lang === currentLang);
+    });
 }
 
 function updateNavLinks() {
@@ -1779,5 +1967,4 @@ if (cyberPlayer) {
 }
 </script>
 </body>
-
 </html>
