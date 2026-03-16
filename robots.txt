@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /audio/.gitkeep
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /*?utm_
+Disallow: /*?lang=  # если переключение языка через параметр
+
+Sitemap: https://nyxx.su/sitemap.xml
