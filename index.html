@@ -261,11 +261,10 @@ border-radius: 12px;
 padding: 40px;
 margin: 40px 0;
 box-shadow:
-0 10px 30px rgba(0,255,136,0.4),
-inset 0 0 20px rgba(0,255,136,0.2);
+0 8px 22px rgba(0,255,136,0.24);
 position: relative;
 overflow: hidden;
-backdrop-filter: blur(5px);
+backdrop-filter: none;
 }
 @keyframes scanline {
 0% { transform: translateX(-100%); opacity: 0.3; }
@@ -501,7 +500,7 @@ to { opacity: 1; transform: translateY(0); }
 .donate-address { padding: 18px 14px; font-size: 1rem; }
 .copy-btn { padding: 14px 24px; font-size: 1em; }
 .contact-item { padding: 14px 12px; flex-wrap: wrap; gap: 8px; }
-.sound-toggle { bottom: 16px; right: 16px; width: 48px; height: 48px; }
+.sound-toggle { display: none !important; }
 .btn { width: 90%; padding: 25px; font-size: 1.5em; }
 }
 @media (max-width: 480px) {
@@ -1294,14 +1293,17 @@ color: #000;
 .apk-download-box { width: 230px; padding: 12px 16px; right: 75px; }
 }
 @media (max-width: 768px) {
-.apk-download-box { width: 200px; padding: 12px 14px; top: 12px; right: 12px; }
+.apk-download-box { width: 200px; padding: 12px 14px; top: var(--apk-top, 12px) !important; right: 12px; backdrop-filter: none !important; }
 .apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 40px; height: 40px; }
 .apk-download-box .apk-head { gap: 10px; }
 .apk-download-box .apk-label { font-size: 0.8em; white-space: normal; text-align: center; }
 .apk-download-box .apk-cta { padding: 10px 12px; font-size: 0.85em; }
+
+/* Мобильная оптимизация: backdrop-filter тяжёлый для GPU */
+.donate-address, .copy-btn, .cyber-player, .apk-download-box { backdrop-filter: none !important; }
 }
 @media (max-width: 480px) {
-.apk-download-box { width: 180px; padding: 10px 12px; top: 10px; right: 10px; }
+.apk-download-box { width: 180px; padding: 10px 12px; top: var(--apk-top, 10px) !important; right: 10px; backdrop-filter: none !important; }
 .apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 36px; height: 36px; }
 }
 /* подзаголовок «Теперь и на Android» между заголовком и слоганом */
@@ -1313,6 +1315,78 @@ margin: 8px 0 16px;
 letter-spacing: 0.12em;
 text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
 font-weight: 600;
+}
+/* hero-блок с видео-фоном */
+.home-hero {
+position: relative;
+overflow: hidden;
+border-radius: 14px;
+padding: 48px 20px 20px;
+margin: 8px 0 18px;
+isolation: isolate;
+--hero-fade: 0.28;
+}
+.home-hero-video {
+position: absolute;
+inset: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+z-index: -2;
+opacity: 0.62;
+transform: translate3d(0, 0, 0) scale(1.06);
+transform-origin: center center;
+will-change: transform, opacity;
+transform: translateZ(0) scale(1.06);
+backface-visibility: hidden;
+pointer-events: none;
+}
+.home-hero::before {
+content: '';
+position: absolute;
+inset: 0;
+z-index: -1;
+pointer-events: none;
+background:
+    radial-gradient(circle at 30% 20%, rgba(0, 255, 136, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 65%, rgba(0, 255, 136, 0.1), transparent 40%);
+}
+.home-hero::after {
+content: '';
+position: absolute;
+inset: 0;
+z-index: -1;
+pointer-events: none;
+opacity: var(--hero-fade);
+background: linear-gradient(180deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.72) 45%, rgba(0, 0, 0, 0.9) 100%);
+transition: opacity 0.12s linear;
+}
+.home-hero .header {
+margin-top: 24px;
+}
+.home-hero .android-tagline {
+margin-top: 14px;
+}
+.home-hero .tagline {
+margin-top: 26px;
+margin-bottom: 16px;
+}
+@media (max-width: 768px) {
+.home-hero {
+padding: 34px 12px 12px;
+margin: 6px 0 12px;
+}
+.home-hero .header {
+margin-top: 16px;
+}
+}
+@media (prefers-reduced-motion: reduce) {
+.home-hero-video {
+transform: none !important;
+}
+.home-hero::after {
+transition: none;
+}
 }
 </style>
 </head>
@@ -1366,9 +1440,14 @@ font-weight: 600;
 </div>
 <!-- главная (русская) -->
 <div id="home-ru" class="section active">
+<div class="home-hero">
+<video class="home-hero-video" id="homeHeroVideoRu" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true">
+<source src="video_unmarked.mp4" type="video/mp4">
+</video>
 <div class="header">NEXUS</div>
 <div class="android-tagline">Теперь и на Android</div>
 <div class="tagline">Терминальный чат, который не хранит и не продает твои данные</div>
+</div>
 <div class="terminal-frame">
 <p class="terminal-text">
 Добро пожаловать, Тень! Нексус - это не просто чат. Это пространство, где каждое слово обретает форму.
@@ -1417,9 +1496,14 @@ font-weight: 600;
 </div>
 <!-- главная (англ) -->
 <div id="home-en" class="section">
+<div class="home-hero">
+<video class="home-hero-video" id="homeHeroVideoEn" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true">
+<source src="video_unmarked.mp4" type="video/mp4">
+</video>
 <div class="header">NEXUS</div>
 <div class="android-tagline">Now on Android</div>
 <div class="tagline">The terminal chat that never logs your soul</div>
+</div>
 <div class="terminal-frame">
 <p class="terminal-text">
 Welcome, Shadow. You've crossed the threshold of Nexus — not another chat, but a place where conversations breathe.
@@ -1522,53 +1606,53 @@ Welcome to the Shadows, NYXX.
 // звук
 // ==========================================
 const soundToggle = document.getElementById('soundToggle');
-const sounds = {
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+const sounds = isMobile ? null : {
     click: new Audio('audio/click.mp3'),
 };
-sounds.click.preload = 'metadata';
-sounds.click.volume = 0.5;
 
-let soundEnabled = true;
+let soundEnabled = !isMobile;
 let masterVolume = 1.0;
 let audioElement = null;
 
 function playClickSound() {
-    if (soundEnabled && sounds && sounds.click) {
-        sounds.click.currentTime = 0;
-        sounds.click.play().catch(function(){});
-    }
+    if (!soundEnabled || !sounds || !sounds.click) return;
+    sounds.click.currentTime = 0;
+    sounds.click.play().catch(function(){});
 }
 
 function updateVolumeUI() {
-    if (audioElement) {
-        if (soundEnabled) {
-            audioElement.volume = masterVolume;
-            sounds.click.volume = masterVolume;
-        } else {
-            audioElement.volume = 0;
-            sounds.click.volume = 0;
-        }
+    if (!audioElement) return;
+    if (!soundEnabled || !sounds || !sounds.click) {
+        audioElement.volume = 0;
+        if (sounds && sounds.click) sounds.click.volume = 0;
+        return;
     }
-
-    if (!soundEnabled) {
-        soundToggle.classList.add('muted');
-    } else {
-        soundToggle.classList.remove('muted');
-    }
+    audioElement.volume = masterVolume;
+    sounds.click.volume = masterVolume;
 }
 
-soundToggle?.addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    
-    if (soundEnabled) {
-        soundToggle.classList.remove('muted');
-        sounds.click.play().catch(e => {});
-    } else {
-        soundToggle.classList.add('muted');
-    }
-    
-    updateVolumeUI();
-});
+if (sounds && soundToggle) {
+    sounds.click.preload = 'metadata';
+    sounds.click.volume = 0.5;
+    soundToggle.classList.remove('muted');
+
+    soundToggle.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        
+        if (soundEnabled && sounds && sounds.click) {
+            soundToggle.classList.remove('muted');
+            sounds.click.play().catch(e => {});
+        } else {
+            soundToggle.classList.add('muted');
+        }
+        
+        updateVolumeUI();
+    });
+} else if (soundToggle) {
+    // На мобиле полностью выключаем кнопку и любые попытки воспроизведения.
+    soundToggle.remove();
+}
 
 window.setAudioElement = function(element) {
     audioElement = element;
@@ -1599,7 +1683,7 @@ function initMatrix() {
         const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         
         let lastTime = 0;
-        const fps = 30;
+        const fps = window.innerWidth <= 768 ? 18 : 30;
         const interval = 1000 / fps;
 
         function draw(timestamp) {
@@ -1642,6 +1726,8 @@ let currentLang = 'ru';
 
 document.addEventListener('DOMContentLoaded', () => {
     updateUI();
+    initHeroVideo();
+    updateMobileApkTop();
     
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
@@ -1675,6 +1761,99 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+function initHeroVideo() {
+    const heroes = Array.from(document.querySelectorAll('.home-hero'));
+    const videos = Array.from(document.querySelectorAll('.home-hero-video'));
+    if (!videos.length || !heroes.length) return;
+
+    const syncActiveHeroVideo = () => {
+        const activeSection = document.querySelector('.section.active');
+        const activeVideo = activeSection ? activeSection.querySelector('.home-hero-video') : null;
+
+        videos.forEach(v => {
+            if (v === activeVideo) {
+                v.muted = true;
+                if (v.paused) {
+                    const p = v.play();
+                    if (p && typeof p.catch === 'function') p.catch(() => {});
+                }
+            } else {
+                if (!v.paused) v.pause();
+            }
+        });
+    };
+
+    syncActiveHeroVideo();
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) syncActiveHeroVideo();
+    });
+    window.addEventListener('pageshow', syncActiveHeroVideo);
+    window.addEventListener('focus', syncActiveHeroVideo);
+
+    // На некоторых устройствах autoplay стабилизируется после первого взаимодействия.
+    document.addEventListener('pointerdown', syncActiveHeroVideo, { once: true });
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isMobile || reducedMotion) return;
+
+    let rafPending = false;
+    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+    const updateHeroFx = () => {
+        rafPending = false;
+        const vh = window.innerHeight || 1;
+
+        heroes.forEach(hero => {
+            const rect = hero.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > vh) return;
+
+            const visiblePx = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+            const visibleRatio = visiblePx / Math.min(rect.height, vh);
+            const fade = clamp(0.16 + (1 - visibleRatio) * 0.42, 0.16, 0.56);
+            hero.style.setProperty('--hero-fade', fade.toFixed(3));
+
+            const video = hero.querySelector('.home-hero-video');
+            if (!video) return;
+            const centerOffset = (rect.top + rect.height * 0.5) - vh * 0.5;
+            const parallaxY = clamp(centerOffset * -0.06, -28, 28);
+            video.style.transform = `translate3d(0, ${parallaxY.toFixed(2)}px, 0) scale(1.06)`;
+        });
+    };
+
+    const requestHeroUpdate = () => {
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(updateHeroFx);
+    };
+
+    updateHeroFx();
+    window.addEventListener('scroll', requestHeroUpdate, { passive: true });
+    window.addEventListener('resize', requestHeroUpdate, { passive: true });
+
+    // Экспортируем наружу, чтобы при переключении RU/EN играть только активное видео.
+    window.syncActiveHeroVideo = syncActiveHeroVideo;
+}
+
+function updateMobileApkTop() {
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const nav = document.querySelector('.nav-container');
+    const box = document.querySelector('.apk-download-box');
+    if (!mobile || !nav || !box) return;
+
+    const navBottom = nav.getBoundingClientRect().bottom;
+    const nextTop = Math.ceil(navBottom + 12);
+    document.documentElement.style.setProperty('--apk-top', `${nextTop}px`);
+}
+
+window.addEventListener('resize', () => {
+    updateMobileApkTop();
+}, { passive: true });
+
+window.addEventListener('orientationchange', () => {
+    updateMobileApkTop();
+});
+
 function updateUI() {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     const targetSection = document.getElementById(`${currentSection}-${currentLang}`);
@@ -1684,6 +1863,9 @@ function updateUI() {
     document.querySelectorAll('.apk-download-box .apk-lang').forEach(el => {
         el.classList.toggle('active', el.dataset.lang === currentLang);
     });
+    if (typeof window.syncActiveHeroVideo === 'function') {
+        window.syncActiveHeroVideo();
+    }
 }
 
 function updateNavLinks() {
