@@ -54,11 +54,6 @@ background-image:
 radial-gradient(circle at 10% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 20%),
 radial-gradient(circle at 90% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 20%);
 }
-@media (max-width: 768px) {
-body.site-landing-v2 {
-padding-bottom: calc(118px + env(safe-area-inset-bottom, 0px));
-}
-}
 /* лёгкий film grain + виньетка — GPU-дёшево */
 .site-film-grain {
 position: fixed;
@@ -536,8 +531,8 @@ to { opacity: 1; transform: translateY(0); }
 @media (max-width: 480px) {
 .header { font-size: 1.9rem; }
 .nav-link, .lang-link { padding: 10px 10px; font-size: 0.9em; }
-.apk-download-box { width: 180px; padding: 10px 12px; top: 10px; right: 10px; }
-.apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 36px; height: 36px; }
+.apk-desktop-only { width: 180px; padding: 10px 12px; top: 10px; right: 10px; }
+.apk-desktop-only .apk-app-icon, .apk-desktop-only .apk-android-icon { width: 36px; height: 36px; }
 }
 /* кнопка звука */
 .sound-toggle {
@@ -1289,35 +1284,12 @@ padding: 12px 16px;
 }
 @media (max-width: 768px) {
 .cyber-player {
-display: flex;
-flex-direction: column;
-left: 0;
-right: 0;
-bottom: 0;
-top: auto;
-width: 100%;
-max-width: 100%;
-border-radius: 18px 18px 0 0;
-padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px));
-padding-left: max(14px, env(safe-area-inset-left));
-padding-right: max(14px, env(safe-area-inset-right));
-backdrop-filter: none !important;
-box-shadow:
-0 -10px 36px rgba(0, 0, 0, 0.55),
-inset 0 1px 0 rgba(0, 255, 136, 0.12);
-}
-.cyber-player:hover {
-transform: none;
-}
-.player-mute-mobile {
-display: inline-flex;
+display: none !important;
 }
 .sound-toggle { display: none !important; }
-.visualizer { height: 36px; margin-bottom: 10px; }
-.player-controls { padding-top: 2px; }
 }
 
-/* APK-блок: фиксированно справа сверху, как плеер по стилю */
+/* APK-блок: фиксированно справа сверху (только десктоп) */
 .apk-download-box {
 width: 260px;
 background: linear-gradient(145deg, rgba(0, 30, 0, 0.85), rgba(0, 20, 0, 0.95));
@@ -1425,22 +1397,50 @@ color: #000;
 }
 .apk-download-box .apk-lang { display: none; }
 .apk-download-box .apk-lang.active { display: block; }
+/* мобильная полоса APK — только в потоке между hero и терминалом */
+.apk-mobile-strip {
+display: none;
+}
 @media (max-width: 1024px) {
-.apk-download-box { width: 230px; padding: 12px 16px; right: 75px; }
+.apk-download-box:not(.apk-mobile-strip) { width: 230px; padding: 12px 16px; right: 75px; }
 }
 @media (max-width: 768px) {
-.apk-download-box { width: 200px; padding: 12px 14px; top: var(--apk-top, 12px) !important; right: 12px; backdrop-filter: none !important; }
-.apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 40px; height: 40px; }
-.apk-download-box .apk-head { gap: 10px; }
-.apk-download-box .apk-label { font-size: 0.8em; white-space: normal; text-align: center; }
-.apk-download-box .apk-cta { padding: 10px 12px; font-size: 0.85em; }
+.apk-desktop-only {
+display: none !important;
+}
+.apk-mobile-strip {
+display: block !important;
+position: relative !important;
+left: auto !important;
+right: auto !important;
+top: auto !important;
+width: 100vw !important;
+max-width: 100vw !important;
+margin-left: calc(50% - 50vw) !important;
+margin-right: calc(50% - 50vw) !important;
+margin-top: 12px !important;
+margin-bottom: 16px !important;
+border-radius: 12px !important;
+padding: 14px 16px !important;
+backdrop-filter: none !important;
+box-shadow:
+0 8px 24px rgba(0, 0, 0, 0.45),
+inset 0 0 12px rgba(0, 255, 136, 0.1) !important;
+}
+.apk-mobile-strip:hover { transform: none !important; }
+.apk-mobile-strip .apk-app-icon, .apk-mobile-strip .apk-android-icon { width: 44px; height: 44px; }
+.apk-mobile-strip .apk-head { gap: 12px; }
+.apk-mobile-strip .apk-label { font-size: 0.88em; white-space: normal; text-align: center; }
+.apk-mobile-strip .apk-cta { padding: 12px 16px; font-size: 0.95em; }
 
 /* Мобильная оптимизация: backdrop-filter тяжёлый для GPU */
-.donate-address, .copy-btn, .cyber-player, .apk-download-box { backdrop-filter: none !important; }
+.donate-address, .copy-btn { backdrop-filter: none !important; }
 }
 @media (max-width: 480px) {
-.apk-download-box { width: 180px; padding: 10px 12px; top: var(--apk-top, 10px) !important; right: 10px; backdrop-filter: none !important; }
-.apk-download-box .apk-app-icon, .apk-download-box .apk-android-icon { width: 36px; height: 36px; }
+.apk-mobile-strip {
+padding: 12px 14px !important;
+}
+.apk-mobile-strip .apk-app-icon, .apk-mobile-strip .apk-android-icon { width: 40px; height: 40px; }
 }
 /* подзаголовок «Теперь и на Android» между заголовком и слоганом */
 .android-tagline {
@@ -1551,7 +1551,7 @@ transition: none;
 <canvas class="matrix-layer"></canvas>
 <canvas class="matrix-layer"></canvas>
 </div>
-<div class="apk-download-box">
+<div class="apk-download-box apk-desktop-only">
 <div class="apk-inner">
 <div class="apk-head">
 <img src="icon.png" alt="Nexus" class="apk-app-icon">
@@ -1589,6 +1589,22 @@ transition: none;
 <div class="header">NEXUS</div>
 <div class="android-tagline">Теперь и на Android</div>
 <div class="tagline">Терминальный чат, который не хранит и не продает твои данные</div>
+</div>
+<div class="apk-download-box apk-mobile-strip">
+<div class="apk-inner">
+<div class="apk-head">
+<img src="icon.png" alt="Nexus" class="apk-app-icon">
+<svg class="apk-android-icon" viewBox="0 0 24 24" fill="#00ff88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="filter: drop-shadow(0 0 4px rgba(0,255,136,0.6));">
+<path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0012 1.75c-1.03 0-2.05.31-2.92.88L7.62 1.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.98 5.98 0 006 7.25h12c0-1.23-.38-2.4-1.03-3.37l-.94-.84zM10 5.25c.41 0 .75-.34.75-.75s-.34-.75-.75-.75-.75.34-.75.75.34.75.75.75zm4 0c.41 0 .75-.34.75-.75s-.34-.75-.75-.75-.75.34-.75.75.34.75.75.75z"/>
+</svg>
+</div>
+<div class="apk-title-row">
+<span class="apk-label apk-lang active" data-lang="ru">Скачать на Android</span>
+<span class="apk-label apk-lang" data-lang="en">Download on Android</span>
+</div>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang active" data-lang="ru">Скачать APK</a>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang" data-lang="en">Download APK</a>
+</div>
 </div>
 <div class="terminal-frame">
 <p class="terminal-text">
@@ -1645,6 +1661,22 @@ transition: none;
 <div class="header">NEXUS</div>
 <div class="android-tagline">Now on Android</div>
 <div class="tagline">The terminal chat that never logs your soul</div>
+</div>
+<div class="apk-download-box apk-mobile-strip">
+<div class="apk-inner">
+<div class="apk-head">
+<img src="icon.png" alt="Nexus" class="apk-app-icon">
+<svg class="apk-android-icon" viewBox="0 0 24 24" fill="#00ff88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="filter: drop-shadow(0 0 4px rgba(0,255,136,0.6));">
+<path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0012 1.75c-1.03 0-2.05.31-2.92.88L7.62 1.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.98 5.98 0 006 7.25h12c0-1.23-.38-2.4-1.03-3.37l-.94-.84zM10 5.25c.41 0 .75-.34.75-.75s-.34-.75-.75-.75-.75.34-.75.75.34.75.75.75zm4 0c.41 0 .75-.34.75-.75s-.34-.75-.75-.75-.75.34-.75.75.34.75.75.75z"/>
+</svg>
+</div>
+<div class="apk-title-row">
+<span class="apk-label apk-lang active" data-lang="ru">Скачать на Android</span>
+<span class="apk-label apk-lang" data-lang="en">Download on Android</span>
+</div>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang active" data-lang="ru">Скачать APK</a>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang" data-lang="en">Download APK</a>
+</div>
 </div>
 <div class="terminal-frame">
 <p class="terminal-text">
@@ -2036,14 +2068,7 @@ function initHeroVideo() {
 }
 
 function updateMobileApkTop() {
-    const mobile = window.matchMedia('(max-width: 768px)').matches;
-    const nav = document.querySelector('.nav-container');
-    const box = document.querySelector('.apk-download-box');
-    if (!mobile || !nav || !box) return;
-
-    const navBottom = nav.getBoundingClientRect().bottom;
-    const nextTop = Math.ceil(navBottom + 12);
-    document.documentElement.style.setProperty('--apk-top', `${nextTop}px`);
+    /* мобила: APK в потоке (apk-mobile-strip), десктоп: фикс .apk-desktop-only — JS-позиционирование не нужно */
 }
 
 window.addEventListener('resize', () => {
@@ -2159,7 +2184,7 @@ function nyxxEnter() {
 // плеер
 // ==========================================
 const cyberPlayer = document.querySelector('.cyber-player');
-if (cyberPlayer) {
+if (cyberPlayer && !window.matchMedia('(max-width: 768px)').matches) {
     const tracks = [
         { name: "Skyfall Beats // Metro", src: "audio/track1.mp3" },
         { name: "A-Mase // The Paradise Beach", src: "audio/track2.mp3" },
