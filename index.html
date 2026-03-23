@@ -1461,6 +1461,7 @@ padding: 48px 20px 20px;
 margin: 8px 0 18px;
 isolation: isolate;
 --hero-fade: 0.28;
+height: clamp(414px, 59.4vh, 612px);
 }
 .home-hero-video {
 position: absolute;
@@ -1497,22 +1498,80 @@ background: linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.76) 
 transition: opacity 0.15s linear;
 }
 .home-hero .header {
-margin-top: 24px;
+margin-top: 0;
+transform: translateY(-22px);
+z-index: 2;
 }
 .home-hero .android-tagline {
-margin-top: 14px;
+margin-top: 118px;
 }
 .home-hero .tagline {
-margin-top: 26px;
-margin-bottom: 16px;
+position: absolute;
+left: 50%;
+bottom: 38px;
+transform: translateX(-50%);
+margin: 0;
+width: calc(100% - 32px);
+z-index: 2;
+}
+.hero-enter-cta {
+position: absolute;
+left: 50%;
+top: 44%;
+transform: translate(-50%, -50%);
+z-index: 3;
+padding: 16px 46px;
+min-width: 210px;
+border-radius: 14px;
+border: 2px solid #00ff88;
+background: linear-gradient(145deg, rgba(0, 45, 0, 0.92), rgba(0, 20, 0, 0.98));
+color: #00ff88;
+font-family: 'Rajdhani', 'Courier New', monospace;
+font-weight: 800;
+font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+letter-spacing: 0.1em;
+text-transform: uppercase;
+text-align: center;
+cursor: pointer;
+box-shadow: 0 0 28px rgba(0,255,136,0.42), inset 0 0 16px rgba(0,255,136,0.14);
+text-shadow: 0 0 16px rgba(0,255,136,0.75);
+transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+animation: heroEnterPulse 1.8s ease-in-out infinite;
+}
+.hero-enter-cta:hover {
+transform: translate(-50%, -50%) scale(1.04);
+box-shadow: 0 0 44px rgba(0,255,136,0.68), inset 0 0 24px rgba(0,255,136,0.24);
+border-color: #5dffb8;
+}
+.hero-enter-cta:active {
+transform: translate(-50%, -50%) scale(0.98);
+}
+@keyframes heroEnterPulse {
+0%, 100% { box-shadow: 0 0 28px rgba(0,255,136,0.42), inset 0 0 16px rgba(0,255,136,0.14); }
+50% { box-shadow: 0 0 50px rgba(0,255,136,0.75), inset 0 0 26px rgba(0,255,136,0.3); }
 }
 @media (max-width: 768px) {
 .home-hero {
 padding: 34px 12px 12px;
 margin: 6px 0 12px;
+height: clamp(306px, 50.4vh, 468px);
 }
 .home-hero .header {
-margin-top: 16px;
+margin-top: 0;
+transform: translateY(-26px);
+}
+.home-hero .android-tagline {
+margin-top: 14px;
+}
+.home-hero .tagline {
+bottom: 8px;
+width: calc(100% - 20px);
+}
+.hero-enter-cta {
+top: 46%;
+padding: 14px 34px;
+min-width: 180px;
+font-size: 1.1rem;
 }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1589,6 +1648,7 @@ transition: none;
 <div class="header">NEXUS</div>
 <div class="android-tagline">Теперь и на Android</div>
 <div class="tagline">Терминальный чат, который не хранит и не продает твои данные</div>
+<button type="button" class="hero-enter-cta" onclick="nyxxEnter()">ВОЙТИ</button>
 </div>
 <div class="apk-download-box apk-mobile-strip">
 <div class="apk-inner">
@@ -1661,6 +1721,7 @@ transition: none;
 <div class="header">NEXUS</div>
 <div class="android-tagline">Now on Android</div>
 <div class="tagline">The terminal chat that never logs your soul</div>
+<button type="button" class="hero-enter-cta" onclick="nyxxEnter()">ENTER</button>
 </div>
 <div class="apk-download-box apk-mobile-strip">
 <div class="apk-inner">
@@ -1998,13 +2059,18 @@ function initHeroVideo() {
         const updateHeroFx = () => {
             rafPending = false;
             const vh = window.innerHeight || 1;
+            const activeSection = document.querySelector('.section.active');
 
             heroes.forEach(hero => {
+                if (!activeSection || !activeSection.contains(hero)) return;
+                if (hero.offsetParent === null) return;
                 const rect = hero.getBoundingClientRect();
+                if (rect.height <= 0) return;
                 if (rect.bottom < 0 || rect.top > vh) return;
 
                 const visiblePx = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-                const visibleRatio = visiblePx / Math.min(rect.height, vh);
+                const visibleBase = Math.max(1, Math.min(rect.height, vh));
+                const visibleRatio = visiblePx / visibleBase;
                 const fade = clamp(0.16 + (1 - visibleRatio) * 0.42, 0.16, 0.56);
                 hero.style.setProperty('--hero-fade', fade.toFixed(3));
             });
