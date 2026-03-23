@@ -2023,6 +2023,22 @@ function initHeroVideo() {
     const videos = Array.from(document.querySelectorAll('.home-hero-video'));
     if (!videos.length || !heroes.length) return;
 
+    const isMobileViewport = () => window.matchMedia('(max-width: 768px)').matches;
+    const pickHeroVideoSrc = () => (isMobileViewport() ? 'video_unmarked_mobile.mp4' : 'video_unmarked.mp4');
+    const syncHeroVideoSource = () => {
+        const targetSrc = pickHeroVideoSrc();
+        videos.forEach((v) => {
+            const currentSource = v.querySelector('source');
+            if (!currentSource) return;
+            const currentSrc = (currentSource.getAttribute('src') || '').trim();
+            if (currentSrc === targetSrc) return;
+            currentSource.setAttribute('src', targetSrc);
+            v.load();
+        });
+    };
+
+    syncHeroVideoSource();
+
     const syncActiveHeroVideo = () => {
         const activeSection = document.querySelector('.section.active');
         const activeVideo = activeSection ? activeSection.querySelector('.home-hero-video') : null;
@@ -2131,6 +2147,9 @@ function initHeroVideo() {
 
     // Экспортируем наружу, чтобы при переключении RU/EN играть только активное видео.
     window.syncActiveHeroVideo = syncActiveHeroVideo;
+
+    // Поддерживаем корректный источник видео при смене ширины окна.
+    window.syncHeroVideoSource = syncHeroVideoSource;
 }
 
 function updateMobileApkTop() {
@@ -2138,10 +2157,22 @@ function updateMobileApkTop() {
 }
 
 window.addEventListener('resize', () => {
+    if (typeof window.syncHeroVideoSource === 'function') {
+        window.syncHeroVideoSource();
+    }
+    if (typeof window.syncActiveHeroVideo === 'function') {
+        window.syncActiveHeroVideo();
+    }
     updateMobileApkTop();
 }, { passive: true });
 
 window.addEventListener('orientationchange', () => {
+    if (typeof window.syncHeroVideoSource === 'function') {
+        window.syncHeroVideoSource();
+    }
+    if (typeof window.syncActiveHeroVideo === 'function') {
+        window.syncActiveHeroVideo();
+    }
     updateMobileApkTop();
 });
 
