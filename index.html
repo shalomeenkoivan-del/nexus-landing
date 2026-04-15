@@ -1414,10 +1414,10 @@ position: relative !important;
 left: auto !important;
 right: auto !important;
 top: auto !important;
-width: 100vw !important;
-max-width: 100vw !important;
-margin-left: calc(50% - 50vw) !important;
-margin-right: calc(50% - 50vw) !important;
+width: 100% !important;
+max-width: 100% !important;
+margin-left: 0 !important;
+margin-right: 0 !important;
 margin-top: 12px !important;
 margin-bottom: 16px !important;
 border-radius: 12px !important;
@@ -1582,6 +1582,275 @@ transform: none !important;
 transition: none;
 }
 }
+
+/* B2B / заказ мессенджера — зеркало APK (десктоп слева) */
+.b2b-lead-box {
+width: 260px;
+background: linear-gradient(145deg, rgba(0, 30, 0, 0.85), rgba(0, 20, 0, 0.95));
+border: 1.5px solid rgba(0, 255, 136, 0.35);
+border-radius: 14px;
+padding: 14px 16px;
+box-shadow:
+0 6px 20px rgba(0, 30, 15, 0.7),
+inset 0 0 12px rgba(0, 255, 136, 0.12);
+font-family: 'Rajdhani', monospace;
+backdrop-filter: blur(6px);
+transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+user-select: none;
+position: fixed;
+top: 25px;
+left: 85px;
+right: auto;
+z-index: 15;
+overflow: hidden;
+}
+.b2b-lead-box::before {
+content: '';
+position: absolute;
+top: 0; left: -100%; right: 0; bottom: 0;
+background: linear-gradient(90deg, transparent, rgba(0,255,136,0.04), transparent);
+animation: scanLine 2.8s linear infinite;
+z-index: 0;
+pointer-events: none;
+opacity: 0.4;
+}
+.b2b-lead-box:hover {
+border-color: rgba(0, 255, 136, 0.65);
+box-shadow:
+0 8px 28px rgba(0, 40, 20, 0.85),
+inset 0 0 18px rgba(0, 255, 136, 0.22);
+transform: translateY(-2px);
+}
+.b2b-lead-box .b2b-inner {
+position: relative;
+z-index: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 12px;
+}
+.b2b-lead-box .b2b-head {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+gap: 12px;
+}
+.b2b-lead-box .b2b-app-icon {
+width: 44px;
+height: 44px;
+border-radius: 12px;
+object-fit: cover;
+box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+border: 1px solid rgba(0, 255, 136, 0.4);
+flex-shrink: 0;
+}
+.b2b-lead-box .b2b-biz-icon {
+width: 44px;
+height: 44px;
+flex-shrink: 0;
+}
+.b2b-lead-box .b2b-title-row { text-align: center; }
+.b2b-lead-box .b2b-label {
+color: rgba(0, 255, 136, 0.92);
+font-size: 0.82em;
+font-weight: 700;
+letter-spacing: 0.04em;
+text-shadow: 0 0 8px rgba(0, 255, 136, 0.45);
+line-height: 1.25;
+}
+.b2b-lead-box .b2b-cta {
+display: block;
+width: 100%;
+padding: 10px 12px;
+text-align: center;
+background: linear-gradient(145deg, rgba(0, 50, 20, 0.9), rgba(0, 35, 15, 0.95));
+color: var(--accent);
+border: 1.5px solid rgba(0, 255, 136, 0.5);
+border-radius: 10px;
+font-family: 'Rajdhani', monospace;
+font-weight: 700;
+font-size: 0.72em;
+letter-spacing: 0.05em;
+line-height: 1.35;
+cursor: pointer;
+transition: all 0.25s ease;
+box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+}
+.b2b-lead-box .b2b-cta:hover {
+background: linear-gradient(145deg, rgba(0, 255, 136, 0.25), rgba(0, 200, 120, 0.2));
+border-color: var(--accent);
+box-shadow: 0 0 20px rgba(0, 255, 136, 0.45);
+transform: translateY(-1px);
+color: #000;
+}
+.b2b-lead-box .b2b-lang { display: none; }
+.b2b-lead-box .b2b-lang.active { display: block; }
+.b2b-mobile-strip {
+display: none;
+}
+@media (max-width: 1024px) {
+.b2b-lead-box.b2b-desktop-only { width: 230px; padding: 12px 14px; left: 70px; }
+}
+@media (max-width: 768px) {
+.b2b-desktop-only { display: none !important; }
+.b2b-mobile-strip {
+display: block !important;
+position: relative !important;
+left: auto !important;
+right: auto !important;
+top: auto !important;
+width: 100% !important;
+max-width: 100% !important;
+margin-left: 0 !important;
+margin-right: 0 !important;
+margin-top: 0 !important;
+margin-bottom: 16px !important;
+border-radius: 12px !important;
+padding: 14px 16px !important;
+backdrop-filter: none !important;
+box-shadow:
+0 8px 24px rgba(0, 0, 0, 0.45),
+inset 0 0 12px rgba(0, 255, 136, 0.1) !important;
+}
+.b2b-mobile-strip:hover { transform: none !important; }
+.b2b-mobile-strip .b2b-app-icon, .b2b-mobile-strip .b2b-biz-icon { width: 40px; height: 40px; }
+.b2b-mobile-strip .b2b-label { font-size: 0.85em; }
+.b2b-mobile-strip .b2b-cta { padding: 12px 14px; font-size: 0.78em; }
+}
+@media (max-width: 480px) {
+.b2b-lead-box.b2b-desktop-only { width: 200px; left: 10px; padding: 10px 12px; }
+.b2b-mobile-strip { padding: 12px 14px !important; }
+.b2b-mobile-strip .b2b-cta { font-size: 0.72em; }
+}
+
+/* Модалка заявки B2B */
+.nyxx-b2b-overlay {
+display: none;
+position: fixed;
+inset: 0;
+z-index: 200;
+background: rgba(0, 0, 0, 0.72);
+backdrop-filter: blur(4px);
+align-items: center;
+justify-content: center;
+padding: 20px 16px;
+box-sizing: border-box;
+}
+.nyxx-b2b-overlay.is-open { display: flex; }
+.nyxx-b2b-modal {
+width: 100%;
+max-width: 400px;
+background: linear-gradient(145deg, rgba(0, 35, 0, 0.95), rgba(0, 12, 0, 0.98));
+border: 1.5px solid rgba(0, 255, 136, 0.45);
+border-radius: 14px;
+padding: 22px 20px 20px;
+box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65), 0 0 24px rgba(0, 255, 136, 0.15);
+font-family: 'Rajdhani', monospace;
+position: relative;
+}
+.nyxx-b2b-modal h2 {
+color: var(--accent);
+font-size: 1.15rem;
+margin: 0 0 16px;
+text-align: center;
+font-weight: 800;
+letter-spacing: 0.06em;
+line-height: 1.3;
+}
+.nyxx-b2b-modal h2 .b2b-lang { display: none; }
+.nyxx-b2b-modal h2 .b2b-lang.active { display: block; }
+.nyxx-b2b-close {
+position: absolute;
+top: 10px;
+right: 10px;
+width: 36px;
+height: 36px;
+border: 1px solid rgba(0, 255, 136, 0.4);
+border-radius: 8px;
+background: rgba(0, 25, 0, 0.6);
+color: var(--accent);
+font-size: 1.25rem;
+line-height: 1;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: background 0.2s, border-color 0.2s;
+}
+.nyxx-b2b-close:hover {
+background: rgba(0, 255, 136, 0.15);
+border-color: var(--accent);
+}
+.nyxx-b2b-modal label {
+display: block;
+color: rgba(0, 255, 136, 0.85);
+font-size: 0.88rem;
+font-weight: 600;
+margin-bottom: 6px;
+letter-spacing: 0.04em;
+}
+.nyxx-b2b-modal label .b2b-lang { display: none; }
+.nyxx-b2b-modal label .b2b-lang.active { display: inline; }
+.nyxx-b2b-modal button[type="submit"] .b2b-lang { display: none; }
+.nyxx-b2b-modal button[type="submit"] .b2b-lang.active { display: inline; }
+.nyxx-b2b-modal input[type="text"],
+.nyxx-b2b-modal input[type="tel"] {
+width: 100%;
+box-sizing: border-box;
+padding: 12px 14px;
+margin-bottom: 14px;
+border-radius: 8px;
+border: 1px solid rgba(0, 255, 136, 0.35);
+background: rgba(0, 15, 0, 0.75);
+color: var(--accent);
+font-family: 'Rajdhani', monospace;
+font-size: 1rem;
+}
+.nyxx-b2b-modal input:focus {
+outline: none;
+border-color: var(--accent);
+box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
+}
+.nyxx-b2b-modal .nyxx-b2b-error {
+color: #ff6b6b;
+font-size: 0.85rem;
+min-height: 1.2em;
+margin: -6px 0 10px;
+display: none;
+}
+.nyxx-b2b-modal .nyxx-b2b-error.is-visible { display: block; }
+.nyxx-b2b-modal button[type="submit"] {
+width: 100%;
+padding: 14px;
+margin-top: 4px;
+border-radius: 10px;
+border: 1.5px solid rgba(0, 255, 136, 0.55);
+background: linear-gradient(145deg, rgba(0, 60, 25, 0.9), rgba(0, 35, 15, 0.95));
+color: var(--accent);
+font-family: 'Rajdhani', monospace;
+font-weight: 800;
+font-size: 1rem;
+letter-spacing: 0.08em;
+cursor: pointer;
+transition: all 0.2s;
+}
+.nyxx-b2b-modal button[type="submit"]:hover:not(:disabled) {
+background: linear-gradient(145deg, rgba(0, 255, 136, 0.28), rgba(0, 180, 100, 0.22));
+color: #000;
+}
+.nyxx-b2b-modal button[type="submit"]:disabled {
+opacity: 0.55;
+cursor: not-allowed;
+}
+.nyxx-b2b-modal .nyxx-b2b-success {
+color: var(--accent);
+text-align: center;
+margin-top: 12px;
+font-weight: 700;
+display: none;
+}
+.nyxx-b2b-modal .nyxx-b2b-success.is-visible { display: block; }
 </style>
 </head>
 <body class="site-landing-v2">
@@ -1626,6 +1895,22 @@ transition: none;
 <a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang" data-lang="en" onclick="typeof playClickSound==='function'&&playClickSound()">Download APK</a>
 </div>
 </div>
+<div class="b2b-lead-box b2b-desktop-only" id="nyxxB2bDesktop">
+<div class="b2b-inner">
+<div class="b2b-head">
+<img src="icon.png" alt="" class="b2b-app-icon" width="44" height="44">
+<svg class="b2b-biz-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2h3a1 1 0 011 1v11a2 2 0 01-2 2H6a2 2 0 01-2-2V8a1 1 0 011-1h3zm2 0h4V5h-4v2z" stroke="#00ff88" stroke-width="1.4" fill="rgba(0,40,20,0.5)" style="filter: drop-shadow(0 0 4px rgba(0,255,136,0.5));"/>
+</svg>
+</div>
+<div class="b2b-title-row">
+<span class="b2b-label b2b-lang active" data-lang="ru">Корпоративный NYXX</span>
+<span class="b2b-label b2b-lang" data-lang="en">NYXX for business</span>
+</div>
+<button type="button" class="b2b-cta b2b-lang active" data-lang="ru" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Заказать мессенджер (веб-версия / мобильное приложение) специально для вашего бизнеса</button>
+<button type="button" class="b2b-cta b2b-lang" data-lang="en" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Order a custom messenger (web &amp; mobile) for your business</button>
+</div>
+</div>
 <div class="content">
 <!-- панель навигации -->
 <div class="nav-container">
@@ -1664,6 +1949,22 @@ transition: none;
 </div>
 <a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang active" data-lang="ru">Скачать APK</a>
 <a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang" data-lang="en">Download APK</a>
+</div>
+</div>
+<div class="b2b-lead-box b2b-mobile-strip" id="nyxxB2bMobileRu">
+<div class="b2b-inner">
+<div class="b2b-head">
+<img src="icon.png" alt="" class="b2b-app-icon" width="44" height="44">
+<svg class="b2b-biz-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2h3a1 1 0 011 1v11a2 2 0 01-2 2H6a2 2 0 01-2-2V8a1 1 0 011-1h3zm2 0h4V5h-4v2z" stroke="#00ff88" stroke-width="1.4" fill="rgba(0,40,20,0.5)" style="filter: drop-shadow(0 0 4px rgba(0,255,136,0.5));"/>
+</svg>
+</div>
+<div class="b2b-title-row">
+<span class="b2b-label b2b-lang active" data-lang="ru">Корпоративный NYXX</span>
+<span class="b2b-label b2b-lang" data-lang="en">NYXX for business</span>
+</div>
+<button type="button" class="b2b-cta b2b-lang active" data-lang="ru" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Заказать мессенджер (веб-версия / мобильное приложение) специально для вашего бизнеса</button>
+<button type="button" class="b2b-cta b2b-lang" data-lang="en" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Order a custom messenger (web &amp; mobile) for your business</button>
 </div>
 </div>
 <div class="terminal-frame">
@@ -1737,6 +2038,22 @@ transition: none;
 </div>
 <a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang active" data-lang="ru">Скачать APK</a>
 <a href="https://we.are.nyxx.su/download" download="nexus.apk" class="apk-cta apk-lang" data-lang="en">Download APK</a>
+</div>
+</div>
+<div class="b2b-lead-box b2b-mobile-strip" id="nyxxB2bMobileEn">
+<div class="b2b-inner">
+<div class="b2b-head">
+<img src="icon.png" alt="" class="b2b-app-icon" width="44" height="44">
+<svg class="b2b-biz-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2h3a1 1 0 011 1v11a2 2 0 01-2 2H6a2 2 0 01-2-2V8a1 1 0 011-1h3zm2 0h4V5h-4v2z" stroke="#00ff88" stroke-width="1.4" fill="rgba(0,40,20,0.5)" style="filter: drop-shadow(0 0 4px rgba(0,255,136,0.5));"/>
+</svg>
+</div>
+<div class="b2b-title-row">
+<span class="b2b-label b2b-lang active" data-lang="ru">Корпоративный NYXX</span>
+<span class="b2b-label b2b-lang" data-lang="en">NYXX for business</span>
+</div>
+<button type="button" class="b2b-cta b2b-lang active" data-lang="ru" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Заказать мессенджер (веб-версия / мобильное приложение) специально для вашего бизнеса</button>
+<button type="button" class="b2b-cta b2b-lang" data-lang="en" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Order a custom messenger (web &amp; mobile) for your business</button>
 </div>
 </div>
 <div class="terminal-frame">
@@ -2185,6 +2502,12 @@ function updateUI() {
     document.querySelectorAll('.apk-download-box .apk-lang').forEach(el => {
         el.classList.toggle('active', el.dataset.lang === currentLang);
     });
+    document.querySelectorAll('.b2b-lead-box .b2b-lang').forEach(el => {
+        el.classList.toggle('active', el.dataset.lang === currentLang);
+    });
+    document.querySelectorAll('#nyxxB2bModal .b2b-lang').forEach(el => {
+        el.classList.toggle('active', el.dataset.lang === currentLang);
+    });
     if (typeof window.syncActiveHeroVideo === 'function') {
         window.syncActiveHeroVideo();
     }
@@ -2530,6 +2853,173 @@ if (cyberPlayer && !window.matchMedia('(max-width: 768px)').matches) {
     
     window.setAudioElement(audio);
 }
+</script>
+
+<div id="nyxxB2bOverlay" class="nyxx-b2b-overlay" role="dialog" aria-modal="true" aria-labelledby="nyxxB2bModalTitle" hidden>
+<div class="nyxx-b2b-modal" id="nyxxB2bModal" role="document" onclick="event.stopPropagation();">
+<button type="button" class="nyxx-b2b-close" onclick="nyxxB2bCloseModal();" aria-label="Close">&times;</button>
+<h2 id="nyxxB2bModalTitle">
+<span class="b2b-lang active" data-lang="ru">Заявка: мессенджер для бизнеса</span>
+<span class="b2b-lang" data-lang="en">Request: business messenger</span>
+</h2>
+<form id="nyxxB2bForm" action="https://formspree.io/f/xaqaqdgr" method="POST">
+<input type="hidden" name="_subject" value="NYXX — заказ мессенджера (веб/мобайл) для бизнеса">
+<label for="nyxxB2bName"><span class="b2b-lang active" data-lang="ru">Имя</span><span class="b2b-lang" data-lang="en">Name</span></label>
+<input type="text" id="nyxxB2bName" name="name" autocomplete="name" maxlength="120">
+<label for="nyxxB2bPhone"><span class="b2b-lang active" data-lang="ru">Телефон</span><span class="b2b-lang" data-lang="en">Phone</span></label>
+<input type="tel" id="nyxxB2bPhone" name="phone" inputmode="tel" autocomplete="tel">
+<p class="nyxx-b2b-error" id="nyxxB2bFormError" role="alert"></p>
+<button type="submit" id="nyxxB2bSubmit"><span class="b2b-lang active" data-lang="ru">Отправить заявку</span><span class="b2b-lang" data-lang="en">Submit request</span></button>
+</form>
+<p class="nyxx-b2b-success" id="nyxxB2bFormSuccess" aria-live="polite"></p>
+</div>
+</div>
+
+<script>
+(function () {
+    'use strict';
+    var FORMSPREE_B2B = 'https://formspree.io/f/xaqaqdgr';
+    var overlay = document.getElementById('nyxxB2bOverlay');
+    var form = document.getElementById('nyxxB2bForm');
+    var nameInput = document.getElementById('nyxxB2bName');
+    var phoneInput = document.getElementById('nyxxB2bPhone');
+    var errEl = document.getElementById('nyxxB2bFormError');
+    var okEl = document.getElementById('nyxxB2bFormSuccess');
+    var submitBtn = document.getElementById('nyxxB2bSubmit');
+
+    function countDigits(str) {
+        return (String(str).replace(/\D/g, '') || '').length;
+    }
+    function validPhone(str) {
+        return countDigits(str) >= 10;
+    }
+    function getLang() {
+        return typeof currentLang !== 'undefined' ? currentLang : 'ru';
+    }
+    function msg(ru, en) {
+        return getLang() === 'ru' ? ru : en;
+    }
+    function restoreSubmitButton() {
+        if (!submitBtn || !submitBtn.dataset.defaultHtml) return;
+        submitBtn.innerHTML = submitBtn.dataset.defaultHtml;
+        submitBtn.disabled = false;
+        if (typeof updateUI === 'function') updateUI();
+    }
+
+    if (submitBtn && !submitBtn.dataset.defaultHtml) {
+        submitBtn.dataset.defaultHtml = submitBtn.innerHTML;
+    }
+
+    window.nyxxB2bOpenModal = function () {
+        if (!overlay) return;
+        if (form) {
+            form.reset();
+            form.style.display = 'block';
+        }
+        if (errEl) {
+            errEl.textContent = '';
+            errEl.classList.remove('is-visible');
+        }
+        if (okEl) {
+            okEl.textContent = '';
+            okEl.classList.remove('is-visible');
+        }
+        restoreSubmitButton();
+        overlay.hidden = false;
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        if (typeof updateUI === 'function') updateUI();
+        if (nameInput) nameInput.focus();
+    };
+    window.nyxxB2bCloseModal = function () {
+        if (!overlay) return;
+        overlay.classList.remove('is-open');
+        overlay.hidden = true;
+        document.body.style.overflow = '';
+    };
+
+    if (overlay) {
+        overlay.addEventListener('click', function () {
+            nyxxB2bCloseModal();
+        });
+    }
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay && overlay.classList.contains('is-open')) {
+            nyxxB2bCloseModal();
+        }
+    });
+
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function () {
+            this.value = this.value.replace(/[^\d\s\+\-\(\)]/g, '');
+            if (errEl) {
+                errEl.classList.remove('is-visible');
+                errEl.textContent = '';
+            }
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!nameInput || !phoneInput || !submitBtn) return;
+            var name = nameInput.value.trim();
+            var phone = phoneInput.value.trim();
+            if (name.length < 1) {
+                if (errEl) {
+                    errEl.textContent = msg('Введите имя (хотя бы один символ).', 'Enter a name (at least one character).');
+                    errEl.classList.add('is-visible');
+                }
+                nameInput.focus();
+                return;
+            }
+            if (!validPhone(phone)) {
+                if (errEl) {
+                    errEl.textContent = msg('Введите корректный номер (минимум 10 цифр).', 'Enter a valid phone number (at least 10 digits).');
+                    errEl.classList.add('is-visible');
+                }
+                phoneInput.focus();
+                return;
+            }
+            if (errEl) errEl.classList.remove('is-visible');
+            var orig = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.textContent = msg('Отправка…', 'Sending…');
+
+            fetch(FORMSPREE_B2B, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { Accept: 'application/json' }
+            })
+                .then(function (r) {
+                    return r.json();
+                })
+                .then(function (data) {
+                    if (data && data.ok) {
+                        form.style.display = 'none';
+                        if (okEl) {
+                            okEl.textContent = msg('Заявка отправлена. Спасибо!', 'Request sent. Thank you!');
+                            okEl.classList.add('is-visible');
+                        }
+                        submitBtn.innerHTML = orig;
+                        submitBtn.disabled = false;
+                        if (typeof updateUI === 'function') updateUI();
+                    } else {
+                        submitBtn.innerHTML = orig;
+                        submitBtn.disabled = false;
+                        if (typeof updateUI === 'function') updateUI();
+                        alert(msg('Ошибка отправки. Попробуйте позже.', 'Something went wrong. Please try again.'));
+                    }
+                })
+                .catch(function () {
+                    submitBtn.innerHTML = orig;
+                    submitBtn.disabled = false;
+                    if (typeof updateUI === 'function') updateUI();
+                    alert(msg('Ошибка отправки. Попробуйте позже.', 'Something went wrong. Please try again.'));
+                });
+        });
+    }
+})();
 </script>
 </body>
 </html>
