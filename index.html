@@ -126,9 +126,16 @@ z-index: -1;
 }
 .nav-bar, .lang-box {
 display: flex;
-gap: 15px;
 align-items: center;
 font-weight: 600;
+}
+.nav-bar {
+gap: 8px;
+font-size: 1.02em;
+flex-wrap: nowrap;
+}
+.lang-box {
+gap: 15px;
 font-size: 1.15em;
 }
 .nav-link, .lang-link {
@@ -142,6 +149,10 @@ position: relative;
 font-weight: 700;
 z-index: 2;
 letter-spacing: 1px;
+}
+.nav-bar > .nav-link {
+padding: 7px 10px;
+letter-spacing: 0.04em;
 }
 .nav-link::after, .lang-link::after {
 content: '|';
@@ -507,9 +518,54 @@ to { opacity: 1; transform: translateY(0); }
 .header { font-size: 2.2rem; letter-spacing: -1px; margin: 20px 0 30px; }
 .tagline { font-size: 1rem; margin: 12px 0 24px; }
 .android-tagline { font-size: 0.8rem; margin: 6px 0 10px; letter-spacing: 0.08em; }
-.nav-container { padding: 10px 12px; margin: 12px 0; flex-wrap: wrap; justify-content: center; }
-.nav-bar, .lang-box { gap: 8px; font-size: 0.95em; }
-.nav-link, .lang-link { padding: 10px 12px; min-height: 44px; display: inline-flex; align-items: center; }
+.nav-container {
+padding: 12px 10px;
+margin: 10px 0;
+width: 100%;
+max-width: 100%;
+box-sizing: border-box;
+flex-direction: column;
+align-items: stretch;
+gap: 12px;
+}
+.nav-bar {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 10px 8px;
+width: 100%;
+font-size: clamp(0.68rem, 2.75vw, 0.78rem);
+}
+.nav-bar > .nav-link {
+width: 100%;
+box-sizing: border-box;
+justify-content: center;
+text-align: center;
+padding: 10px 6px;
+min-height: 44px;
+letter-spacing: 0.02em;
+line-height: 1.2;
+}
+.nav-link::after {
+display: none;
+}
+.lang-box {
+justify-content: center;
+width: 100%;
+gap: 14px;
+font-size: 1.05em;
+padding-top: 12px;
+margin: 0;
+border-top: 1px solid rgba(0, 255, 136, 0.22);
+}
+.nav-link, .lang-link {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+}
+.lang-link {
+padding: 10px 18px;
+min-height: 44px;
+}
 .terminal-frame { padding: 20px 14px; margin: 24px 0; }
 .terminal-text { font-size: 0.9rem; padding: 14px; }
 .terminal-text .feature-line { padding: 6px 10px; font-size: 0.88em; }
@@ -524,15 +580,42 @@ to { opacity: 1; transform: translateY(0); }
 .donate-box { padding: 24px 16px; margin: 24px 12px; }
 .donate-address { padding: 18px 14px; font-size: 1rem; }
 .copy-btn { padding: 14px 24px; font-size: 1em; }
-.contact-item { padding: 14px 12px; flex-wrap: wrap; gap: 8px; }
+.contact-item { padding: 14px 12px; }
+.contact-item-inner { gap: 12px; align-items: flex-start; }
+.contact-icon { width: 44px; height: 44px; border-radius: 10px; margin-top: 2px; }
+.contact-icon svg { width: 24px; height: 24px; }
+.contact-body { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 6px; }
+.contact-body .contact-link {
+text-align: left;
+width: 100%;
+word-break: break-word;
+overflow-wrap: anywhere;
+min-height: 44px;
+display: inline-flex;
+align-items: center;
+padding: 10px 8px;
+margin: -4px -8px;
+box-sizing: border-box;
+}
 .sound-toggle { display: none !important; }
 .btn { width: 90%; padding: 25px; font-size: 1.5em; }
 }
 @media (max-width: 480px) {
 .header { font-size: 1.9rem; }
-.nav-link, .lang-link { padding: 10px 10px; font-size: 0.9em; }
+.nav-bar {
+grid-template-columns: 1fr;
+font-size: clamp(0.72rem, 3.4vw, 0.84rem);
+gap: 8px;
+}
+.nav-bar > .nav-link {
+padding: 10px 10px;
+}
+.lang-link { padding: 10px 16px; }
 .apk-desktop-only { width: 180px; padding: 10px 12px; top: 10px; right: 10px; }
 .apk-desktop-only .apk-app-icon, .apk-desktop-only .apk-android-icon { width: 36px; height: 36px; }
+.contact-item-inner { gap: 10px; }
+.contact-icon { width: 40px; height: 40px; border-radius: 10px; }
+.contact-icon svg { width: 22px; height: 22px; }
 }
 /* кнопка звука */
 .sound-toggle {
@@ -571,7 +654,7 @@ to { opacity: 1; transform: translateY(0); }
 }
 .contact-item {
 display: flex;
-justify-content: space-between;
+justify-content: flex-start;
 align-items: center;
 padding: 20px;
 background: rgba(0,30,0,0.6);
@@ -581,6 +664,55 @@ transition: all 0.3s;
 border-radius: 8px;
 position: relative;
 overflow: hidden;
+}
+.contact-item-inner {
+display: flex;
+align-items: center;
+gap: 16px;
+width: 100%;
+min-width: 0;
+}
+.contact-icon {
+flex-shrink: 0;
+width: 48px;
+height: 48px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 12px;
+color: var(--accent);
+background: rgba(0, 255, 136, 0.08);
+border: 1px solid rgba(0, 255, 136, 0.35);
+box-shadow: 0 0 12px rgba(0, 255, 136, 0.15);
+}
+.contact-icon svg {
+display: block;
+width: 28px;
+height: 28px;
+fill: currentColor;
+filter: drop-shadow(0 0 6px rgba(0, 255, 136, 0.45));
+}
+.contact-icon svg path {
+fill: currentColor;
+}
+.contact-body {
+flex: 1;
+min-width: 0;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: space-between;
+gap: 8px 16px;
+}
+.contact-body .contact-label {
+font-weight: bold;
+color: #00ff88;
+}
+.contact-body .contact-link {
+flex-shrink: 1;
+min-width: 0;
+max-width: 100%;
+text-align: right;
 }
 .contact-item::before {
 content: '';
@@ -617,6 +749,223 @@ transform: scale(1.05);
 color: #666;
 cursor: not-allowed;
 opacity: 0.7;
+}
+/* === NYXX mobile marketing section === */
+.mobile-page {
+padding-bottom: 32px;
+}
+.mobile-page-title {
+font-size: clamp(1.75rem, 5vw, 2.75rem);
+text-align: center;
+margin: 8px 0 28px;
+color: var(--accent);
+text-shadow: 0 0 18px rgba(0, 255, 136, 0.45);
+letter-spacing: 0.06em;
+font-weight: 800;
+}
+.mobile-block {
+margin-bottom: 48px;
+}
+.mobile-block:last-of-type {
+margin-bottom: 0;
+}
+.mobile-block-grid {
+display: flex;
+flex-direction: column;
+gap: 22px;
+}
+@media (min-width: 900px) {
+.mobile-block-grid {
+flex-direction: row;
+align-items: flex-start;
+gap: 28px;
+}
+.mobile-block-grid .mobile-block-text {
+flex: 1 1 48%;
+min-width: 0;
+}
+.mobile-block-grid .mobile-block-carousel-wrap {
+flex: 1 1 48%;
+min-width: 0;
+max-width: min(440px, 48%);
+}
+}
+.mobile-block-text {
+color: #c8e6d0;
+line-height: 1.55;
+font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+}
+.mobile-block-text h3 {
+color: var(--accent);
+font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+margin: 0 0 14px;
+font-weight: 700;
+letter-spacing: 0.03em;
+}
+.mobile-block-text p {
+margin: 0 0 12px;
+}
+.mobile-block-text p:last-child {
+margin-bottom: 0;
+}
+.mobile-block-text ul {
+margin: 10px 0 0;
+padding-left: 1.15em;
+}
+.mobile-block-text li {
+margin-bottom: 8px;
+}
+.mobile-block-text li:last-child {
+margin-bottom: 0;
+}
+.scroll-reveal {
+opacity: 0;
+transform: translateY(22px);
+will-change: opacity, transform;
+}
+.scroll-reveal.is-inview {
+opacity: 1;
+transform: translateY(0);
+transition: opacity 1.35s cubic-bezier(0.22, 0.65, 0.36, 1), transform 1.35s cubic-bezier(0.22, 0.65, 0.36, 1);
+}
+.scroll-reveal.scroll-reveal--delay-sm.is-inview {
+transition-delay: 0.22s;
+}
+.scroll-reveal.scroll-reveal--delay-md.is-inview {
+transition-delay: 0.4s;
+}
+.scroll-reveal.scroll-reveal--delay-lg.is-inview {
+transition-delay: 0.58s;
+}
+@media (prefers-reduced-motion: reduce) {
+.scroll-reveal {
+opacity: 1;
+transform: none;
+}
+.scroll-reveal.is-inview,
+.scroll-reveal.scroll-reveal--delay-sm.is-inview,
+.scroll-reveal.scroll-reveal--delay-md.is-inview,
+.scroll-reveal.scroll-reveal--delay-lg.is-inview {
+transition: none;
+}
+.mobile-carousel-track.is-animating {
+transition: none !important;
+}
+}
+.mobile-block-carousel-wrap {
+width: 100%;
+}
+.mobile-carousel {
+position: relative;
+border: 1px solid rgba(0, 255, 136, 0.35);
+border-radius: 12px;
+background: rgba(0, 24, 12, 0.65);
+box-shadow: 0 0 18px rgba(0, 255, 136, 0.12);
+padding: 10px 40px 36px;
+box-sizing: border-box;
+outline: none;
+}
+.mobile-carousel:focus-visible {
+box-shadow: 0 0 0 2px var(--accent), 0 0 18px rgba(0, 255, 136, 0.25);
+}
+.mobile-carousel-viewport {
+overflow: hidden;
+border-radius: 8px;
+background: #050805;
+}
+.mobile-carousel-track {
+display: flex;
+width: 100%;
+transition: transform 0.38s ease;
+}
+.mobile-carousel-slide {
+flex: 0 0 100%;
+min-width: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 8px;
+box-sizing: border-box;
+}
+.mobile-carousel-slide img {
+max-width: 100%;
+width: auto;
+height: auto;
+max-height: min(68vh, 640px);
+object-fit: contain;
+vertical-align: middle;
+border-radius: 6px;
+}
+.mobile-carousel-nav {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+width: 34px;
+height: 34px;
+border-radius: 8px;
+border: 1px solid rgba(0, 255, 136, 0.45);
+background: rgba(0, 0, 0, 0.55);
+color: var(--accent);
+font-size: 1.1rem;
+line-height: 1;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0;
+z-index: 2;
+transition: background 0.2s, box-shadow 0.2s;
+}
+.mobile-carousel-nav:hover {
+background: rgba(0, 255, 136, 0.12);
+box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+}
+.mobile-carousel-nav--prev { left: 6px; }
+.mobile-carousel-nav--next { right: 6px; }
+.mobile-carousel-dots {
+position: absolute;
+left: 0;
+right: 0;
+bottom: 8px;
+display: flex;
+justify-content: center;
+gap: 8px;
+z-index: 2;
+}
+.mobile-carousel-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+padding: 0;
+border: 1px solid rgba(0, 255, 136, 0.5);
+background: transparent;
+cursor: pointer;
+transition: background 0.2s, transform 0.2s;
+}
+.mobile-carousel-dot[aria-selected="true"] {
+background: var(--accent);
+transform: scale(1.15);
+box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+}
+@media (max-width: 768px) {
+.mobile-carousel {
+padding: 10px 36px 34px;
+}
+.mobile-carousel-nav {
+width: 32px;
+height: 32px;
+font-size: 1rem;
+}
+.mobile-carousel-slide img {
+max-height: min(56vh, 520px);
+}
+}
+@media (max-width: 520px) {
+.mobile-carousel-nav--prev { left: 4px; }
+.mobile-carousel-nav--next { right: 4px; }
+.mobile-carousel {
+padding: 8px 32px 32px;
+}
 }
 .donate-box {
 background: linear-gradient(145deg, rgba(0,30,0,0.7), rgba(0,20,0,0.9));
@@ -1009,12 +1358,60 @@ transform-origin: center;
 opacity: 1;
 transform: scaleX(1);
 }
+a.shadow-btn {
+text-decoration: none;
+color: #00cc66;
+box-sizing: border-box;
+}
+a.shadow-btn:hover {
+color: #00ff99;
+}
 @media (max-width: 768px) {
 .shadow-btn {
 width: 92%;
 padding: 22px 28px;
 font-size: 1.45em;
 letter-spacing: 2.2px;
+}
+}
+.mobile-watches-stack {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+margin: 56px 0 8px;
+width: 100%;
+}
+.mobile-watches-image {
+display: block;
+max-width: 100%;
+width: auto;
+height: auto;
+max-height: min(52vh, 520px);
+object-fit: contain;
+margin: 0 auto 20px;
+border-radius: 10px;
+box-shadow: 0 0 24px rgba(0, 255, 136, 0.18);
+}
+.mobile-watches-stack .statement {
+margin-top: 12px;
+margin-bottom: 0;
+}
+.site-section-footer {
+margin-top: 80px;
+}
+@media (max-width: 768px) {
+.site-section-footer {
+margin-top: 50px;
+padding-top: 24px;
+font-size: 0.95em;
+}
+.mobile-watches-stack {
+margin: 40px 0 4px;
+}
+.mobile-watches-image {
+max-height: min(48vh, 440px);
+margin-bottom: 16px;
 }
 }
 /* плеер — site v2: прогресс, визуализатор, реакция на бит */
@@ -1916,6 +2313,7 @@ display: none;
 <div class="nav-container">
 <div class="nav-bar" id="nav-bar">
 <span class="nav-link active" data-section="home">ГЛАВНАЯ</span>
+<span class="nav-link" data-section="mobile">МОБИЛЬНАЯ ВЕРСИЯ</span>
 <span class="nav-link" data-section="contacts">КОНТАКТЫ</span>
 <span class="nav-link" data-section="donate">ПОДДЕРЖАТЬ ПРОЕКТ</span>
 </div>
@@ -1926,7 +2324,7 @@ display: none;
 </div>
 <!-- главная (русская) -->
 <div id="home-ru" class="section active">
-<div class="home-hero">
+<div class="home-hero scroll-reveal" data-scroll-reveal>
 <video class="home-hero-video" id="homeHeroVideoRu" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true">
 <source src="video_unmarked.mp4" type="video/mp4">
 </video>
@@ -1967,7 +2365,7 @@ display: none;
 <button type="button" class="b2b-cta b2b-lang" data-lang="en" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Order a custom messenger (web &amp; mobile) for your business</button>
 </div>
 </div>
-<div class="terminal-frame">
+<div class="terminal-frame scroll-reveal" data-scroll-reveal>
 <p class="terminal-text">
 Добро пожаловать, Тень! Нексус - это не просто чат. Это пространство, где каждое слово обретает форму.
 
@@ -1983,7 +2381,7 @@ display: none;
 ДОБРО ПОЖАЛОВАТЬ, NYXX.
 </div>
 </div>
-<div class="features">
+<div class="features scroll-reveal" data-scroll-reveal>
 <div class="feature">
 <div class="feature-title">YouMe AI</div>
 <div class="feature-desc">Твой верный и надежный фантом в мире машин. Общается как человек, помнит контекст, поддержит любую тему. Станет навсегда твоим верным другом и спутником.</div>
@@ -2009,13 +2407,95 @@ display: none;
 <div class="feature-desc">Open-core. Без телеметрии. Контролируй все. Свобода — не опция. Это основа.</div>
 </div>
 </div>
+<div class="home-outro scroll-reveal" data-scroll-reveal>
 <div class="statement">Коммуникация принадлежит тебе</div>
 <div class="shadow-btn" onclick="nyxxEnter()">СКРЫТЬСЯ В ТЕНИ</div>
-<div class="footer">❖ DIGITAL REALITY © 2026 — для тех, кто не страшится Тени ❖</div>
+<div class="footer site-section-footer">❖ DIGITAL REALITY © 2026 — для тех, кто не страшится Тени ❖</div>
+</div>
+</div>
+<!-- мобильный раздел (ru): скриншоты — mobile/block1/1.jpg, 2.jpg | block2/1.jpg, 2.jpg, 3.jpg | block3/1.jpg, 2.jpg -->
+<div id="mobile-ru" class="section mobile-page" role="region" aria-labelledby="mobile-ru-heading">
+<h2 id="mobile-ru-heading" class="mobile-page-title">МОБИЛЬНАЯ ВЕРСИЯ</h2>
+<article class="mobile-block" id="mobile-ru-block1">
+<div class="mobile-block-grid">
+<div class="mobile-block-text scroll-reveal" data-scroll-reveal>
+<h3>Два шага: от приветствия до входа в NYXX</h3>
+<p>NYXX — вход в цифровую реальность Nexus: темный интерфейс, неон и спокойная «консольная» эстетика без визуального шума.</p>
+<p>На первом экране сразу видно, с чего начать: регистрация или вход. На втором — привычная авторизация: идентификатор пользователя, секретная фраза и опция «Запомнить меня», чтобы не вводить данные при каждом запуске и быстрее возвращаться к перепискам и пространствам Nexus с телефона.</p>
+</div>
+<div class="mobile-block-carousel-wrap scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>
+<div class="mobile-carousel" data-carousel tabindex="0" aria-roledescription="carousel" aria-label="Скриншоты: приветствие и вход в NYXX">
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--prev" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--next" data-carousel-next aria-label="Следующий слайд">›</button>
+<div class="mobile-carousel-viewport">
+<div class="mobile-carousel-track" data-carousel-track style="transform:translateX(0)">
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Слайд 1 из 2"><img src="mobile/block1/1.jpg" alt="Стартовый экран NYXX: выбор регистрации или входа" width="390" height="844" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Слайд 2 из 2"><img src="mobile/block1/2.jpg" alt="Экран входа: идентификатор, секретная фраза и опция «Запомнить меня»" width="390" height="844" loading="lazy" decoding="async"></div>
+</div>
+</div>
+<div class="mobile-carousel-dots" data-carousel-dots></div>
+</div>
+</div>
+</div>
+</article>
+<article class="mobile-block" id="mobile-ru-block2">
+<div class="mobile-block-grid">
+<div class="mobile-block-text scroll-reveal" data-scroll-reveal>
+<h3>Три грани Nexus в одном приложении</h3>
+<p>В NYXX собраны три опоры ежедневного сценария — от переписки до ИИ и «дорожной карты» по пространству.</p>
+<p><strong>Чаты.</strong> Личные сообщения в едином темном неоновом оформлении: переписка, вложения и ощущение своего канала связи — без лишнего в интерфейсе.</p>
+<p><strong>YouMe AI.</strong> Ассистент YouMe – Nexus Assistant отвечает по-русски, помогает разобраться с функциями приложения и сценариями проверки. Это отдельный мобильный опыт рядом с чатами и The Void — лентой пространства Nexus.</p>
+<p><strong>Контакты и навигация.</strong> Список людей под рукой; в одной нижней панели — быстрый доступ к комнатам, ленте (The Void) и YouMe, чтобы не терять ритм между чатом, контентом и ассистентом.</p>
+</div>
+<div class="mobile-block-carousel-wrap scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>
+<div class="mobile-carousel" data-carousel tabindex="0" aria-roledescription="carousel" aria-label="Скриншоты: чат, YouMe и навигация">
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--prev" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--next" data-carousel-next aria-label="Следующий слайд">›</button>
+<div class="mobile-carousel-viewport">
+<div class="mobile-carousel-track" data-carousel-track style="transform:translateX(0)">
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Слайд 1 из 3"><img src="mobile/block2/1.jpg" alt="Чаты NYXX в темном неоновом оформлении" width="390" height="844" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Слайд 2 из 3"><img src="mobile/block2/2.jpg" alt="YouMe AI — Nexus Assistant на мобильном" width="390" height="844" loading="lazy" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Слайд 3 из 3"><img src="mobile/block2/3.jpg" alt="Контакты и нижняя панель навигации: комнаты, The Void, YouMe" width="390" height="844" loading="lazy" decoding="async"></div>
+</div>
+</div>
+<div class="mobile-carousel-dots" data-carousel-dots></div>
+</div>
+</div>
+</div>
+</article>
+<article class="mobile-block" id="mobile-ru-block3">
+<div class="mobile-block-grid">
+<div class="mobile-block-text scroll-reveal" data-scroll-reveal>
+<h3>Аудио- и видеозвонки в NYXX</h3>
+<p>В NYXX можно не только переписываться, но и звонить: аудио- и видеозвонки уже доступны из привычного контекста приложения.</p>
+<p>Входящий вызов показан крупно: принять или отклонить — одним касанием. Во время разговора на экране остаются понятные действия: динамик и завершение вызова, без перегруза элементами.</p>
+<p>Для пользователей, которым важна приватность, в интерфейсе звонка отображается статус шифрования — видно, что разговор ведется в защищенном режиме. Так голос и видео становятся естественным продолжением переписки в Nexus и NYXX, а не отдельной «сложной» функцией.</p>
+</div>
+<div class="mobile-block-carousel-wrap scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>
+<div class="mobile-carousel" data-carousel tabindex="0" aria-roledescription="carousel" aria-label="Скриншоты: входящий и активный звонок">
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--prev" data-carousel-prev aria-label="Предыдущий слайд">‹</button>
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--next" data-carousel-next aria-label="Следующий слайд">›</button>
+<div class="mobile-carousel-viewport">
+<div class="mobile-carousel-track" data-carousel-track style="transform:translateX(0)">
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Слайд 1 из 2"><img src="mobile/block3/1.jpg" alt="Входящий аудио- или видеозвонок: принять или отклонить" width="390" height="844" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Слайд 2 из 2"><img src="mobile/block3/2.jpg" alt="Активный звонок: элементы управления и индикация шифрования" width="390" height="844" loading="lazy" decoding="async"></div>
+</div>
+</div>
+<div class="mobile-carousel-dots" data-carousel-dots></div>
+</div>
+</div>
+</div>
+</article>
+<div class="mobile-watches-stack scroll-reveal" data-scroll-reveal>
+<img src="mobile/watches.jpg" alt="" class="mobile-watches-image" width="1200" height="800" decoding="async">
+<div class="statement">It's time to NYXX.</div>
+</div>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="shadow-btn" onclick="typeof playClickSound==='function'&&playClickSound();">СКАЧАТЬ НА ANDROID</a>
+<div class="footer site-section-footer scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>❖ DIGITAL REALITY © 2026 — для тех, кто не страшится Тени ❖</div>
 </div>
 <!-- главная (англ) -->
 <div id="home-en" class="section">
-<div class="home-hero">
+<div class="home-hero scroll-reveal" data-scroll-reveal>
 <video class="home-hero-video" id="homeHeroVideoEn" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true">
 <source src="video_unmarked.mp4" type="video/mp4">
 </video>
@@ -2056,7 +2536,7 @@ display: none;
 <button type="button" class="b2b-cta b2b-lang" data-lang="en" onclick="typeof playClickSound==='function'&&playClickSound();nyxxB2bOpenModal();">Order a custom messenger (web &amp; mobile) for your business</button>
 </div>
 </div>
-<div class="terminal-frame">
+<div class="terminal-frame scroll-reveal" data-scroll-reveal>
 <p class="terminal-text">
 Welcome, Shadow. You've crossed the threshold of Nexus — not another chat, but a place where conversations breathe.
 
@@ -2073,7 +2553,7 @@ You can never unsee it.
 Welcome to the Shadows, NYXX.
 </div>
 </div>
-<div class="features">
+<div class="features scroll-reveal" data-scroll-reveal>
 <div class="feature">
 <div class="feature-title">YouMe AI</div>
 <div class="feature-desc">Your personal ghost in the machine. Communicates like a human, remembers context, supports any topic — from code to philosophy. Not a bot. Your companion.</div>
@@ -2099,40 +2579,154 @@ Welcome to the Shadows, NYXX.
 <div class="feature-desc">Open-core. Zero telemetry. Control everything. Freedom isn't an option. It's the foundation.</div>
 </div>
 </div>
+<div class="home-outro scroll-reveal" data-scroll-reveal>
 <div class="statement">Communication belongs to you</div>
 <div class="shadow-btn" onclick="nyxxEnter()">ENTER THE SHADOWS</div>
-<div class="footer">❖ DIGITAL REALITY © 2026 — for those who dwell in the Shadows ❖</div>
+<div class="footer site-section-footer">❖ DIGITAL REALITY © 2026 — for those who dwell in the Shadows ❖</div>
+</div>
+</div>
+<!-- mobile section (en): screenshots — mobile/block1/1.jpg,2.jpg | block2/1–3.jpg | block3/1–2.jpg (same as RU) -->
+<div id="mobile-en" class="section mobile-page" role="region" aria-labelledby="mobile-en-heading">
+<h2 id="mobile-en-heading" class="mobile-page-title">MOBILE VERSION</h2>
+<article class="mobile-block" id="mobile-en-block1">
+<div class="mobile-block-grid">
+<div class="mobile-block-text scroll-reveal" data-scroll-reveal>
+<h3>Two steps: from welcome to signing in to NYXX</h3>
+<p>NYXX is your doorway into Nexus’s digital reality: a dark interface, neon accents, and a calm “console” look without visual noise.</p>
+<p>On the first screen it’s clear where to start: sign up or sign in. On the second, familiar authentication: your user identifier, secret phrase, and a “Remember me” option so you don’t re-enter everything on every launch and can get back to chats and Nexus spaces faster from your phone.</p>
+</div>
+<div class="mobile-block-carousel-wrap scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>
+<div class="mobile-carousel" data-carousel tabindex="0" aria-roledescription="carousel" aria-label="Screenshots: welcome and sign-in">
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--prev" data-carousel-prev aria-label="Previous slide">‹</button>
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--next" data-carousel-next aria-label="Next slide">›</button>
+<div class="mobile-carousel-viewport">
+<div class="mobile-carousel-track" data-carousel-track style="transform:translateX(0)">
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Slide 1 of 2"><img src="mobile/block1/1.jpg" alt="NYXX welcome screen: sign up or sign in" width="390" height="844" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Slide 2 of 2"><img src="mobile/block1/2.jpg" alt="Sign-in screen: user ID, secret phrase, and Remember me" width="390" height="844" loading="lazy" decoding="async"></div>
+</div>
+</div>
+<div class="mobile-carousel-dots" data-carousel-dots></div>
+</div>
+</div>
+</div>
+</article>
+<article class="mobile-block" id="mobile-en-block2">
+<div class="mobile-block-grid">
+<div class="mobile-block-text scroll-reveal" data-scroll-reveal>
+<h3>Three facets of Nexus in one app</h3>
+<p>NYXX brings together three pillars of your daily flow—from messaging to AI and a “map” across the space.</p>
+<p><strong>Chats.</strong> Direct messages in one dark neon look: threads, attachments, and the feeling of your own channel—without clutter.</p>
+<p><strong>YouMe AI.</strong> Assistant YouMe – Nexus Assistant replies in Russian, helps you learn the app and verification flows, and lives as a dedicated mobile experience next to chats and The Void, Nexus’s feed.</p>
+<p><strong>Contacts &amp; navigation.</strong> People are one tap away; the bottom bar gives quick access to rooms, the feed (The Void), and YouMe so you don’t lose rhythm between chat, content, and the assistant.</p>
+</div>
+<div class="mobile-block-carousel-wrap scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>
+<div class="mobile-carousel" data-carousel tabindex="0" aria-roledescription="carousel" aria-label="Screenshots: chat, YouMe, and navigation">
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--prev" data-carousel-prev aria-label="Previous slide">‹</button>
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--next" data-carousel-next aria-label="Next slide">›</button>
+<div class="mobile-carousel-viewport">
+<div class="mobile-carousel-track" data-carousel-track style="transform:translateX(0)">
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Slide 1 of 3"><img src="mobile/block2/1.jpg" alt="NYXX chats in dark neon UI" width="390" height="844" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Slide 2 of 3"><img src="mobile/block2/2.jpg" alt="YouMe AI — Nexus Assistant on mobile" width="390" height="844" loading="lazy" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Slide 3 of 3"><img src="mobile/block2/3.jpg" alt="Contacts and bottom navigation: rooms, The Void, YouMe" width="390" height="844" loading="lazy" decoding="async"></div>
+</div>
+</div>
+<div class="mobile-carousel-dots" data-carousel-dots></div>
+</div>
+</div>
+</div>
+</article>
+<article class="mobile-block" id="mobile-en-block3">
+<div class="mobile-block-grid">
+<div class="mobile-block-text scroll-reveal" data-scroll-reveal>
+<h3>Audio and video calls in NYXX</h3>
+<p>In NYXX you’re not limited to text—audio and video calls are available from the same familiar places in the app.</p>
+<p>Incoming calls are shown large: accept or decline in one tap. During a call, controls stay obvious—speaker and end call—without crowding the screen.</p>
+<p>For users who care about privacy, the call UI shows encryption status so it’s clear the conversation runs in a protected mode. Voice and video feel like a natural extension of Nexus and NYXX messaging—not a separate “heavy” feature.</p>
+</div>
+<div class="mobile-block-carousel-wrap scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>
+<div class="mobile-carousel" data-carousel tabindex="0" aria-roledescription="carousel" aria-label="Screenshots: incoming and active call">
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--prev" data-carousel-prev aria-label="Previous slide">‹</button>
+<button type="button" class="mobile-carousel-nav mobile-carousel-nav--next" data-carousel-next aria-label="Next slide">›</button>
+<div class="mobile-carousel-viewport">
+<div class="mobile-carousel-track" data-carousel-track style="transform:translateX(0)">
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Slide 1 of 2"><img src="mobile/block3/1.jpg" alt="Incoming audio or video call: accept or decline" width="390" height="844" decoding="async"></div>
+<div class="mobile-carousel-slide" role="group" aria-roledescription="slide" aria-label="Slide 2 of 2"><img src="mobile/block3/2.jpg" alt="Active call: controls and encryption indicator" width="390" height="844" loading="lazy" decoding="async"></div>
+</div>
+</div>
+<div class="mobile-carousel-dots" data-carousel-dots></div>
+</div>
+</div>
+</div>
+</article>
+<div class="mobile-watches-stack scroll-reveal" data-scroll-reveal>
+<img src="mobile/watches.jpg" alt="" class="mobile-watches-image" width="1200" height="800" decoding="async">
+<div class="statement">It's time to NYXX.</div>
+</div>
+<a href="https://we.are.nyxx.su/download" download="nexus.apk" class="shadow-btn" onclick="typeof playClickSound==='function'&&playClickSound();">DOWNLOAD ON ANDROID</a>
+<div class="footer site-section-footer scroll-reveal scroll-reveal--delay-sm" data-scroll-reveal>❖ DIGITAL REALITY © 2026 — for those who dwell in the Shadows ❖</div>
 </div>
 <!-- контакты -->
 <div id="contacts-ru" class="section">
 <div class="header">КОНТАКТЫ</div>
 <div class="contact-item">
-<div class="contact-label" style="font-weight:bold;color:#00ff88">Email:</div>
+<div class="contact-item-inner">
+<span class="contact-icon contact-icon--gmail" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M1.5 8.67v8.58a1.5 1.5 0 0 0 1.5 1.5h18a1.5 1.5 0 0 0 1.5-1.5V8.67l-8.62 5.77a1.5 1.5 0 0 1-1.76 0L1.5 8.67Z"/><path d="M22.5 6.91V6.75a1.5 1.5 0 0 0-1.5-1.5h-18A1.5 1.5 0 0 0 1.5 6.75v.16l9.14 6.15a.75.75 0 0 0 .72 0l9.14-6.15Z"/></svg></span>
+<div class="contact-body">
+<div class="contact-label">Email:</div>
 <a href="mailto:nyxxweare@gmail.com" class="contact-link">nyxxweare@gmail.com</a>
 </div>
+</div>
+</div>
 <div class="contact-item">
-<div class="contact-label" style="font-weight:bold;color:#00ff88">Telegram:</div>
+<div class="contact-item-inner">
+<span class="contact-icon contact-icon--telegram" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M2.01 21 23 12 2.01 3 2 10l15 2 -15 2z"/></svg></span>
+<div class="contact-body">
+<div class="contact-label">Telegram:</div>
 <a href="https://t.me/nexus_nyxx" class="contact-link">@nexus_nyxx</a>
 </div>
-<div class="contact-item">
-<div class="contact-label" style="font-weight:bold;color:#00ff88">GitHub:</div>
-<span class="contact-link disabled">в процессе</span>
 </div>
+</div>
+<div class="contact-item">
+<div class="contact-item-inner">
+<span class="contact-icon contact-icon--instagram" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.427.408.552.216.96.477 1.378.895.418.418.68.826.896 1.378.168.456.35 1.257.408 2.427.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.408 2.427-.216.552-.477.96-.895 1.378-.418.418-.826.68-1.378.896-.456.168-1.257.35-2.427.408-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.427-.408-.552-.216-.96-.477-1.378-.895-.418-.418-.68-.826-.896-1.378-.168-.456-.35-1.257-.408-2.427-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.056-1.17.24-1.97.408-2.427.216-.552.477-.96.895-1.378.418-.418.826-.68 1.378-.896.456-.168 1.257-.35 2.427-.408 1.266-.057 1.646-.07 4.85-.07zm0 1.802c-3.116 0-3.479.012-4.708.068-1.124.052-1.734.24-2.14.398-.54.21-.927.46-1.333.866-.406.406-.656.792-.866 1.333-.158.406-.346 1.016-.398 2.14-.056 1.23-.068 1.592-.068 4.708s.012 3.479.068 4.708c.052 1.124.24 1.734.398 2.14.21.54.46.927.866 1.333.406.406.792.656 1.333.866.406.158 1.016.346 2.14.398 1.229.056 1.592.068 4.708.068s3.479-.012 4.708-.068c1.124-.052 1.734-.24 2.14-.398.54-.21.927-.46 1.333-.866.406-.406.656-.792.866-1.333.158-.406.346-1.016.398-2.14.056-1.229.068-1.592.068-4.708s-.012-3.479-.068-4.708c-.052-1.124-.24-1.734-.398-2.14-.21-.54-.46-.927-.866-1.333-.406-.406-.792-.656-1.333-.866-.406-.158-1.016-.346-2.14-.398-1.229-.056-1.592-.068-4.708-.068zm0 3.891a5.946 5.946 0 1 1 0 11.892 5.946 5.946 0 0 1 0-11.892zm0 1.802a4.144 4.144 0 1 0 0 8.288 4.144 4.144 0 0 0 0-8.288zm6.406-4.142a1.39 1.39 0 1 1-2.78 0 1.39 1.39 0 0 1 2.78 0z"/></svg></span>
+<div class="contact-body">
+<div class="contact-label">Instagram:</div>
+<a href="https://www.instagram.com/nyxxweare" class="contact-link">(@nyxxweare)</a>
+</div>
+</div>
+</div>
+<div class="footer site-section-footer">❖ DIGITAL REALITY © 2026 — для тех, кто не страшится Тени ❖</div>
 </div>
 <div id="contacts-en" class="section">
 <div class="header">CONTACTS</div>
 <div class="contact-item">
-<div class="contact-label" style="font-weight:bold;color:#00ff88">Email:</div>
+<div class="contact-item-inner">
+<span class="contact-icon contact-icon--gmail" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M1.5 8.67v8.58a1.5 1.5 0 0 0 1.5 1.5h18a1.5 1.5 0 0 0 1.5-1.5V8.67l-8.62 5.77a1.5 1.5 0 0 1-1.76 0L1.5 8.67Z"/><path d="M22.5 6.91V6.75a1.5 1.5 0 0 0-1.5-1.5h-18A1.5 1.5 0 0 0 1.5 6.75v.16l9.14 6.15a.75.75 0 0 0 .72 0l9.14-6.15Z"/></svg></span>
+<div class="contact-body">
+<div class="contact-label">Email:</div>
 <a href="mailto:nyxxweare@gmail.com" class="contact-link">nyxxweare@gmail.com</a>
 </div>
+</div>
+</div>
 <div class="contact-item">
-<div class="contact-label" style="font-weight:bold;color:#00ff88">Telegram:</div>
+<div class="contact-item-inner">
+<span class="contact-icon contact-icon--telegram" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M2.01 21 23 12 2.01 3 2 10l15 2 -15 2z"/></svg></span>
+<div class="contact-body">
+<div class="contact-label">Telegram:</div>
 <a href="https://t.me/nexus_nyxx" class="contact-link">(@nexus_nyxx)</a>
 </div>
-<div class="contact-item">
-<div class="contact-label" style="font-weight:bold;color:#00ff88">GitHub:</div>
-<span class="contact-link disabled">(in process)</span>
 </div>
+</div>
+<div class="contact-item">
+<div class="contact-item-inner">
+<span class="contact-icon contact-icon--instagram" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.97.24 2.427.408.552.216.96.477 1.378.895.418.418.68.826.896 1.378.168.456.35 1.257.408 2.427.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.408 2.427-.216.552-.477.96-.895 1.378-.418.418-.826.68-1.378.896-.456.168-1.257.35-2.427.408-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.427-.408-.552-.216-.96-.477-1.378-.895-.418-.418-.68-.826-.896-1.378-.168-.456-.35-1.257-.408-2.427-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.056-1.17.24-1.97.408-2.427.216-.552.477-.96.895-1.378.418-.418.826-.68 1.378-.896.456-.168 1.257-.35 2.427-.408 1.266-.057 1.646-.07 4.85-.07zm0 1.802c-3.116 0-3.479.012-4.708.068-1.124.052-1.734.24-2.14.398-.54.21-.927.46-1.333.866-.406.406-.656.792-.866 1.333-.158.406-.346 1.016-.398 2.14-.056 1.23-.068 1.592-.068 4.708s.012 3.479.068 4.708c.052 1.124.24 1.734.398 2.14.21.54.46.927.866 1.333.406.406.792.656 1.333.866.406.158 1.016.346 2.14.398 1.229.056 1.592.068 4.708.068s3.479-.012 4.708-.068c1.124-.052 1.734-.24 2.14-.398.54-.21.927-.46 1.333-.866.406-.406.656-.792.866-1.333.158-.406.346-1.016.398-2.14.056-1.229.068-1.592.068-4.708s-.012-3.479-.068-4.708c-.052-1.124-.24-1.734-.398-2.14-.21-.54-.46-.927-.866-1.333-.406-.406-.792-.656-1.333-.866-.406-.158-1.016-.346-2.14-.398-1.229-.056-1.592-.068-4.708-.068zm0 3.891a5.946 5.946 0 1 1 0 11.892 5.946 5.946 0 0 1 0-11.892zm0 1.802a4.144 4.144 0 1 0 0 8.288 4.144 4.144 0 0 0 0-8.288zm6.406-4.142a1.39 1.39 0 1 1-2.78 0 1.39 1.39 0 0 1 2.78 0z"/></svg></span>
+<div class="contact-body">
+<div class="contact-label">Instagram:</div>
+<a href="https://www.instagram.com/nyxxweare" class="contact-link">(@nyxxweare)</a>
+</div>
+</div>
+</div>
+<div class="footer site-section-footer">❖ DIGITAL REALITY © 2026 — for those who dwell in the Shadows ❖</div>
 </div>
 <!-- поддержать проект -->
 <div id="donate-ru" class="section">
@@ -2142,14 +2736,16 @@ Welcome to the Shadows, NYXX.
 <div class="donate-address" id="donateAddress">0xb7e7956368e8906262044dc426be058f8580735d</div>
 <button class="copy-btn" onclick="copyAddress.call(this)">СКОПИРОВАТЬ АДРЕС</button>
 </div>
+<div class="footer site-section-footer">❖ DIGITAL REALITY © 2026 — для тех, кто не страшится Тени ❖</div>
 </div>
 <div id="donate-en" class="section">
-<div class="header">MAKE DONATION</div>
+<div class="header">SUPPORT THE PROJECT</div>
 <div class="donate-box">
 <div class="donate-network">ERC-20 (USDT)</div>
 <div class="donate-address" id="donateAddress">0xb7e7956368e8906262044dc426be058f8580735d</div>
 <button class="copy-btn" onclick="copyAddress.call(this)">COPY ADDRESS</button>
 </div>
+<div class="footer site-section-footer">❖ DIGITAL REALITY © 2026 — for those who dwell in the Shadows ❖</div>
 </div>
 </div>
 </div>
@@ -2297,6 +2893,120 @@ window.addEventListener('resize', () => {
 // ==========================================
 // навигация
 // ==========================================
+function initMobileCarousels() {
+    document.querySelectorAll('.mobile-carousel').forEach(function (root) {
+        if (root.getAttribute('data-wired') === '1') return;
+        root.setAttribute('data-wired', '1');
+        var track = root.querySelector('[data-carousel-track]');
+        var slides = Array.prototype.slice.call(root.querySelectorAll('.mobile-carousel-slide'));
+        var dotsHost = root.querySelector('[data-carousel-dots]');
+        var prevBtn = root.querySelector('[data-carousel-prev]');
+        var nextBtn = root.querySelector('[data-carousel-next]');
+        var viewport = root.querySelector('.mobile-carousel-viewport');
+        if (!track || slides.length === 0) return;
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var isEn = !!root.closest('#mobile-en');
+        function dotLabel(j) {
+            return (isEn ? 'Slide ' : 'Слайд ') + (j + 1);
+        }
+        if (dotsHost) {
+            dotsHost.innerHTML = '';
+            slides.forEach(function (_, j) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'mobile-carousel-dot';
+                b.setAttribute('aria-label', dotLabel(j));
+                b.addEventListener('click', function () { go(j); });
+                dotsHost.appendChild(b);
+            });
+        }
+        function getDots() {
+            return dotsHost ? Array.prototype.slice.call(dotsHost.querySelectorAll('button')) : [];
+        }
+        var i = 0;
+        var n = slides.length;
+        function apply() {
+            if (reducedMotion) track.style.transition = 'none';
+            else track.style.transition = '';
+            track.style.transform = 'translateX(-' + (i * 100) + '%)';
+            slides.forEach(function (s, j) {
+                s.setAttribute('aria-hidden', j !== i ? 'true' : 'false');
+            });
+            getDots().forEach(function (d, j) {
+                d.setAttribute('aria-selected', j === i ? 'true' : 'false');
+            });
+        }
+        function go(j) {
+            i = ((j % n) + n) % n;
+            apply();
+        }
+        function delta(d) {
+            go(i + d);
+        }
+        if (prevBtn) prevBtn.addEventListener('click', function () { delta(-1); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { delta(1); });
+        root.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                delta(-1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                delta(1);
+            }
+        });
+        var touchStartX = null;
+        if (viewport) {
+            viewport.addEventListener('touchstart', function (e) {
+                touchStartX = e.changedTouches[0].clientX;
+            }, { passive: true });
+            viewport.addEventListener('touchend', function (e) {
+                if (touchStartX === null) return;
+                var dx = e.changedTouches[0].clientX - touchStartX;
+                touchStartX = null;
+                if (Math.abs(dx) < 48) return;
+                if (dx > 0) delta(-1);
+                else delta(1);
+            }, { passive: true });
+        }
+        apply();
+    });
+}
+
+function refreshScrollRevealsInActiveSection() {
+    var sec = document.getElementById(currentSection + '-' + currentLang);
+    if (!sec || !sec.classList.contains('active')) return;
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+        sec.querySelectorAll('[data-scroll-reveal]').forEach(function (el) {
+            el.classList.add('is-inview');
+        });
+        return;
+    }
+    if (!('IntersectionObserver' in window)) {
+        sec.querySelectorAll('[data-scroll-reveal]').forEach(function (el) {
+            el.classList.add('is-inview');
+        });
+        return;
+    }
+    sec.querySelectorAll('[data-scroll-reveal]').forEach(function (el) {
+        if (el.classList.contains('is-inview')) return;
+        if (el._scrollRevealIo) {
+            el._scrollRevealIo.disconnect();
+            el._scrollRevealIo = null;
+        }
+        var io = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                en.target.classList.add('is-inview');
+                observer.disconnect();
+                en.target._scrollRevealIo = null;
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+        el._scrollRevealIo = io;
+        io.observe(el);
+    });
+}
+
 let currentSection = 'home';
 let currentLang = 'ru';
 
@@ -2308,6 +3018,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUI();
     initHeroVideo();
     updateMobileApkTop();
+    initMobileCarousels();
     
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
@@ -2514,6 +3225,9 @@ function updateUI() {
     if (typeof window.recomputeMatrixLowPower === 'function') {
         window.recomputeMatrixLowPower();
     }
+    requestAnimationFrame(function () {
+        refreshScrollRevealsInActiveSection();
+    });
 }
 
 function updateNavLinks() {
@@ -2525,8 +3239,8 @@ function updateNavLinks() {
     });
     
     const navTexts = {
-        ru: { home: 'ГЛАВНАЯ', contacts: 'КОНТАКТЫ', donate: 'ПОДДЕРЖАТЬ ПРОЕКТ' },
-        en: { home: 'HOME', contacts: 'CONTACTS', donate: 'DONATE' }
+        ru: { home: 'ГЛАВНАЯ', mobile: 'МОБИЛЬНАЯ ВЕРСИЯ', contacts: 'КОНТАКТЫ', donate: 'ПОДДЕРЖАТЬ ПРОЕКТ' },
+        en: { home: 'HOME', mobile: 'MOBILE VERSION', contacts: 'CONTACTS', donate: 'SUPPORT THE PROJECT' }
     };
     
     document.querySelectorAll('.nav-link').forEach(link => {
